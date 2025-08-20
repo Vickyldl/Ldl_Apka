@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <!-- Viewport pre responzívny dizajn -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Interaktívna Príručka pre Vodičov | Lidl</title>
+    
+    <!-- Optimalizácia pre iOS (Apple) zariadenia -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Príručka Lidl">
+    <!-- Ikonka pre pridanie na plochu na iOS -->
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/263/263065.png">
+    <!-- Ikonka pre prehliadače (favicon) -->
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/263/263065.png">
+
+
+    <!-- Farba témy pre prehliadače -->
+    <meta name="theme-color" content="#0050AA">
+
+    <!-- Vložený PWA Manifest s novou ikonkou -->
+    <!-- Tento manifest definuje, ako sa aplikácia správa pri inštalácii na zariadenie -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJzaG9ydF9uYW1lIjogIlByw61ydcSNrYSBMaWRsIiwKICAibmFtZSI6ICJJbnRlcmFrdMOtdm5hIFByw61ydcSNrYSBwcmUgVm9kacSNb3YgTGlkbCIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImh0dHBzOi8vY2RuLWljb25zLXBuZy5mbGF0aWNvbi5jb20vNTEyLzI2My8yNjMwNjUucG5nIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIiwKICAgICAgInNpemVzIjogIjE5MngxOTIiCiAgICB9LAogICAgewogICAgICAic3JjIjogImh0dHBzOi8vY2RuLWljb25zLXBuZy5mbGF0aWNvbi5jb20vNTEyLzI2My8yNjMwNjUucG5nIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIiwKICAgICAgInNpemVzIjogIjUxMng1MTIiCiAgICB9CiAgXSwKICAic3RhcnRfdXJsIjogIi4iLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNmOGY5ZmEiLAogICJ0aGVtZV9jb2xvciI6ICIjMDA1MEFBIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIgp9">
+
+    <!-- Načítanie štýlov a fontov -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Základné štýly pre telo stránky */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            /* Zabránenie zoomovaniu a posúvaniu na iOS pre lepší pocit z aplikácie */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        /* Definícia vlastných tried pre farby Lidlu */
+        .lidl-blue { background-color: #0050AA; }
+        .lidl-blue-text { color: #0050AA; }
+        .lidl-yellow { border-color: #FFD700; }
+        .lidl-red-bg { background-color: #E30613; }
+        /* Štýly pre navigačné karty */
+        .nav-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        /* Štýly pre modálne (vyskakovacie) okno */
+        #modal-backdrop {
+            transition: opacity 0.3s ease-in-out;
+        }
+        #modal-content {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        /* Štýly pre vlajky na prepínanie jazyka */
+        .lang-flag {
+            cursor: pointer;
+            border-radius: 50%;
+            transition: opacity 0.3s, transform 0.3s;
+            opacity: 0.5;
+            width: 32px;
+            height: 32px;
+        }
+        .lang-flag.active {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Hlavný kontajner aplikácie -->
+    <div id="app" class="container mx-auto p-5 md:p-8 max-w-6xl">
+        
+        <!-- Hlavička stránky -->
+        <header class="flex items-center justify-between pb-6 border-b-4 lidl-yellow">
+            <!-- Prepínač jazykov -->
+            <div class="flex items-center gap-2">
+                <img id="lang-sk" src="https://flagcdn.com/w40/sk.png" alt="Slovenčina" class="lang-flag">
+                <img id="lang-en" src="https://flagcdn.com/w40/gb.png" alt="English" class="lang-flag">
+            </div>
+            <!-- Hlavný nadpis a podnadpis -->
+            <div class="text-center">
+                <h1 class="text-2xl md:text-4xl font-bold lidl-blue-text" data-translate-key="main_title">Príručka pre Vodičov</h1>
+                <p class="text-gray-500" data-translate-key="main_subtitle">Váš interaktívny sprievodca pre služobné vozidlá Lidl</p>
+            </div>
+            <!-- Logo Lidlu -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Lidl-Logo.svg/1280px-Lidl-Logo.svg.png" alt="Lidl Logo" class="h-10 md:h-12" onerror="this.onerror=null;this.src='https://placehold.co/120x48/FFFFFF/0050AA?text=Lidl';">
+        </header>
+
+        <!-- Hlavný obsah stránky -->
+        <main class="mt-8">
+            <!-- Sekcia rýchlych akcií -->
+            <section id="quick-actions" class="mb-8 md:mb-12">
+                <h2 class="text-xl font-bold mb-4 lidl-blue-text" data-translate-key="quick_actions_title">Rýchle Akcie a Núdzové Situácie</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Tlačidlo pre prípad nehody -->
+                    <button data-content-id="content-nehoda" class="quick-action-btn text-white p-6 rounded-lg shadow-lg text-left bg-gradient-to-br from-red-700 to-red-500 hover:from-red-800 hover:to-red-600 transition-all transform hover:scale-105">
+                        <div class="flex items-center gap-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                            <div>
+                                <h3 class="text-xl font-bold" data-translate-key="accident_title">Mám nehodu</h3>
+                                <p class="mt-1 opacity-90 text-sm" data-translate-key="accident_subtitle">Okamžitý postup krok za krokom.</p>
+                            </div>
+                        </div>
+                    </button>
+                    <!-- Tlačidlo pre prípad poruchy -->
+                    <button data-content-id="content-porucha" class="quick-action-btn text-white p-6 rounded-lg shadow-lg text-left lidl-blue hover:bg-blue-800 transition-colors">
+                        <span class="text-3xl">🔧</span>
+                        <h3 class="text-xl font-bold mt-2" data-translate-key="breakdown_title">Pokazilo sa mi auto</h3>
+                        <p class="mt-1 opacity-90 text-sm" data-translate-key="breakdown_subtitle">Kontakt na asistenčnú službu.</p>
+                    </button>
+                    <!-- Tlačidlo pre objednanie servisu -->
+                    <button data-content-id="content-servis" class="quick-action-btn bg-gray-700 text-white p-6 rounded-lg shadow-lg text-left hover:bg-gray-800 transition-colors">
+                        <span class="text-3xl">🛠️</span>
+                        <h3 class="text-xl font-bold mt-2" data-translate-key="service_title">Potrebujem servis</h3>
+                        <p class="mt-1 opacity-90 text-sm" data-translate-key="service_subtitle">Objednanie a kontakty.</p>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Sekcia hlavnej navigácie -->
+            <section id="main-navigation">
+                <h2 class="text-xl font-bold mb-4 lidl-blue-text" data-translate-key="categories_title">Informačné Kategórie</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                    <!-- Navigačné karty pre rôzne kategórie -->
+                    <div data-content-id="content-pravidla" class="nav-card bg-white p-4 rounded-lg shadow-md cursor-pointer flex flex-col items-center text-center">
+                        <span class="text-4xl mb-2">📜</span>
+                        <h3 class="font-semibold lidl-blue-text" data-translate-key="nav_rules">Základné Pravidlá</h3>
+                    </div>
+                    <div data-content-id="content-tankovanie" class="nav-card bg-white p-4 rounded-lg shadow-md cursor-pointer flex flex-col items-center text-center">
+                        <span class="text-4xl mb-2">⛽</span>
+                        <h3 class="font-semibold lidl-blue-text" data-translate-key="nav_fueling">Tankovanie</h3>
+                    </div>
+                    <div data-content-id="content-tankovanie-zahranicie" class="nav-card bg-white p-4 rounded-lg shadow-md cursor-pointer flex flex-col items-center text-center">
+                        <span class="text-4xl mb-2">🌍⛽</span>
+                        <h3 class="font-semibold lidl-blue-text" data-translate-key="nav_fueling_abroad">Tankovanie v Zahraničí</h3>
+                    </div>
+                    <div data-content-id="content-udrzba" class="nav-card bg-white p-4 rounded-lg shadow-md cursor-pointer flex flex-col items-center text-center">
+                        <span class="text-4xl mb-2">🔧🛞</span>
+                        <h3 class="font-semibold lidl-blue-text" data-translate-key="nav_maintenance">Údržba a Pneu</h3>
+                    </div>
+                    <div data-content-id="content-poistenie" class="nav-card bg-white p-4 rounded-lg shadow-md cursor-pointer flex flex-col items-center text-center">
+                        <span class="text-4xl mb-2">🛡️</span>
+                        <h3 class="font-semibold lidl-blue-text" data-translate-key="nav_insurance">Poistné Udalosti</h3>
+                    </div>
+                    <div data-content-id="content-kniha-jazd" class="nav-card bg-white p-4 rounded-lg shadow-md cursor-pointer flex flex-col items-center text-center">
+                        <span class="text-4xl mb-2">📖</span>
+                        <h3 class="font-semibold lidl-blue-text" data-translate-key="nav_logbook">Kniha Jázd</h3>
+                    </div>
+                     <div data-content-id="content-pokuty" class="nav-card bg-white p-4 rounded-lg shadow-md cursor-pointer flex flex-col items-center text-center">
+                        <span class="text-4xl mb-2">🧾</span>
+                        <h3 class="font-semibold lidl-blue-text" data-translate-key="nav_fines">Pokuty</h3>
+                    </div>
+                     <div data-content-id="content-nove-auto" class="nav-card bg-white p-4 rounded-lg shadow-md cursor-pointer flex flex-col items-center text-center">
+                        <span class="text-4xl mb-2">🚗</span>
+                        <h3 class="font-semibold lidl-blue-text" data-translate-key="nav_new_car">Nové Vozidlo</h3>
+                    </div>
+                    <div data-content-id="content-my-bmw" class="nav-card bg-white p-4 rounded-lg shadow-md cursor-pointer flex flex-col items-center text-center">
+                        <span class="text-4xl mb-2">📱</span>
+                        <h3 class="font-semibold lidl-blue-text" data-translate-key="nav_my_bmw">MY BMW</h3>
+                    </div>
+                    <div data-content-id="content-kontakty" class="nav-card bg-white p-4 rounded-lg shadow-md cursor-pointer flex flex-col items-center text-center">
+                        <span class="text-4xl mb-2">📞</span>
+                        <h3 class="font-semibold lidl-blue-text" data-translate-key="nav_contacts">Dôležité Kontakty</h3>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modálne okno (vyskakovacie) pre zobrazenie obsahu -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-black bg-opacity-70 hidden z-40"></div>
+    <div id="modal-content" class="fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col">
+            <!-- Hlavička modálneho okna -->
+            <div class="flex justify-between items-center p-4 border-b">
+                <h2 id="modal-title" class="text-xl font-bold lidl-blue-text"></h2>
+                <button id="close-modal-btn" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+            </div>
+            <!-- Telo modálneho okna, kde sa vkladá obsah -->
+            <div id="modal-body" class="p-6 overflow-y-auto">
+                <!-- Obsah sa vkladá dynamicky cez JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Skrytý kontajner s obsahom pre jednotlivé sekcie -->
+    <div id="content-storage" class="hidden">
+        
+        <!-- OBSAH PRE "MÁM NEHODU" -->
+        <div id="content-nehoda">
+            <header class="text-center my-4">
+                <h1 class="text-3xl md:text-4xl font-black tracking-tighter" style="color: #FF4E50;" data-translate-key="acc_h1">DOPRAVNÁ NEHODA</h1>
+                <p class="text-lg md:text-xl font-bold mt-1" style="color: #FC913A;" data-translate-key="acc_p1">Zachovajte pokoj. Tu je váš sprievodca.</p>
+            </header>
+    
+            <section id="krok1" class="my-8">
+                <h2 class="text-2xl font-bold text-center mb-6" data-translate-key="acc_h2_1">KROK 1: Okamžitá bezpečnosť</h2>
+                <p class="text-center max-w-2xl mx-auto mb-8 text-gray-600 text-base" data-translate-key="acc_p2">Vašou prioritou je zabrániť ďalšej škode a postarať sa o zdravie všetkých zúčastnených.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-[#FF4E50]">
+                        <div class="text-5xl mb-3">✋</div>
+                        <h3 class="text-lg font-bold" data-translate-key="acc_h3_1">ZASTAVTE A ZAPNITE SVETLÁ</h3>
+                        <p class="text-gray-600 mt-1 text-sm" data-translate-key="acc_p3">Okamžite zastavte a zapnite výstražné svetlá.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-[#FC913A]">
+                        <div class="text-5xl mb-3">🦺</div>
+                        <h3 class="text-lg font-bold" data-translate-key="acc_h3_2">VESTA A TROJUHOLNÍK</h3>
+                        <p class="text-gray-600 mt-1 text-sm" data-translate-key="acc_p4">Oblečte si vestu a umiestnite trojuholník.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-[#F9D423]">
+                        <div class="text-5xl mb-3">❤️‍🩹</div>
+                        <h3 class="text-lg font-bold" data-translate-key="acc_h3_3">SKONTROLUJTE ZRANENIA</h3>
+                        <p class="text-gray-600 mt-1 text-sm" data-translate-key="acc_p5">Ak je niekto zranený, okamžite volajte.</p>
+                        <div class="mt-3 flex flex-col sm:flex-row justify-center gap-3">
+                            <div class="flex-1">
+                                <p class="text-center text-2xl font-bold text-red-600">155</p>
+                                <a href="tel:155" class="w-full bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg>
+                                    <span data-translate-key="acc_call_1">Volať Záchranku</span>
+                                </a>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-center text-2xl font-bold text-blue-600">112</p>
+                                <a href="tel:112" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg>
+                                    <span data-translate-key="acc_call_2">Volať Linku 112</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <section id="krok2" class="my-10">
+                <h2 class="text-2xl font-bold text-center mb-6" data-translate-key="acc_h2_2">KROK 2: Volať políciu?</h2>
+                <p class="text-center max-w-2xl mx-auto mb-8 text-gray-600 text-base" data-translate-key="acc_p6">Zákon presne stanovuje, kedy je prítomnosť polície povinná.</p>
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="flex flex-col items-center space-y-4">
+                        <div class="bg-gray-100 p-3 rounded-lg text-center font-bold w-full" data-translate-key="acc_q1">Je niekto zranený alebo usmrtený?</div>
+                        <div class="flex w-full justify-around text-center">
+                            <div class="w-1/2 relative">
+                                <div class="absolute left-1/2 -top-4 w-0.5 h-4 bg-gray-300"></div><p class="font-bold" data-translate-key="acc_yes">ÁNO</p><div class="absolute left-1/2 top-6 w-0.5 h-4 bg-gray-300"></div>
+                                <div class="mt-4 bg-red-100 text-red-800 p-3 rounded-lg font-bold text-center" data-translate-key="acc_call_police">VOLAŤ 158</div>
+                            </div>
+                            <div class="w-1/2 relative">
+                                <div class="absolute left-1/2 -top-4 w-0.5 h-4 bg-gray-300"></div><p class="font-bold" data-translate-key="acc_no">NIE</p><div class="absolute left-1/2 top-6 w-0.5 h-4 bg-gray-300"></div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-100 p-3 rounded-lg text-center font-bold w-full" data-translate-key="acc_q2">Je škoda vyššia ako 4000€?</div>
+                        <div class="flex w-full justify-around text-center">
+                            <div class="w-1/2 relative">
+                                <div class="absolute left-1/2 -top-4 w-0.5 h-4 bg-gray-300"></div><p class="font-bold" data-translate-key="acc_yes_2">ÁNO</p><div class="absolute left-1/2 top-6 w-0.5 h-4 bg-gray-300"></div>
+                                <div class="mt-4 bg-red-100 text-red-800 p-3 rounded-lg font-bold text-center" data-translate-key="acc_call_police_2">VOLAŤ 158</div>
+                            </div>
+                            <div class="w-1/2 relative">
+                                <div class="absolute left-1/2 -top-4 w-0.5 h-4 bg-gray-300"></div><p class="font-bold" data-translate-key="acc_no_2">NIE</p><div class="absolute left-1/2 top-6 w-0.5 h-4 bg-gray-300"></div>
+                            </div>
+                        </div>
+                         <div class="bg-gray-100 p-3 rounded-lg text-center font-bold w-full" data-translate-key="acc_q3">Viete sa dohodnúť na vinníkovi?</div>
+                        <div class="flex w-full justify-around text-center">
+                            <div class="w-1/2 relative">
+                                <div class="absolute left-1/2 -top-4 w-0.5 h-4 bg-gray-300"></div><p class="font-bold" data-translate-key="acc_no_3">NIE</p><div class="absolute left-1/2 top-6 w-0.5 h-4 bg-gray-300"></div>
+                                <div class="mt-4 bg-red-100 text-red-800 p-3 rounded-lg font-bold text-center" data-translate-key="acc_call_police_3">VOLAŤ 158</div>
+                            </div>
+                            <div class="w-1/2 relative">
+                                <div class="absolute left-1/2 -top-4 w-0.5 h-4 bg-gray-300"></div><p class="font-bold" data-translate-key="acc_yes_3">ÁNO</p><div class="absolute left-1/2 top-6 w-0.5 h-4 bg-gray-300"></div>
+                                <div class="mt-4 bg-green-100 text-green-800 p-3 rounded-lg font-bold text-center" data-translate-key="acc_no_police">Políciu volať nemusíte.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <section id="krok3" class="my-10">
+                <h2 class="text-2xl font-bold text-center mb-6" data-translate-key="acc_h2_3">KROK 3: Správna dokumentácia</h2>
+                <p class="text-center max-w-2xl mx-auto mb-8 text-gray-600 text-base" data-translate-key="acc_p7">Ak nevoláte políciu, je na vás, aby ste všetko správne zdokumentovali pre poisťovňu.</p>
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex items-start space-x-4 p-3 rounded-lg border-l-8" style="border-color: #FF4E50; background-color: #FF4E501A;">
+                            <div class="text-3xl font-black" style="color: #FF4E50;">1.</div>
+                            <div><h3 class="font-bold" data-translate-key="acc_doc_1_h">Vyplniť Správu o nehode</h3><p class="text-gray-600 text-sm" data-translate-key="acc_doc_1_p">Najdôležitejší dokument. Musí byť podpísaný oboma stranami.</p></div>
+                        </div>
+                        <div class="flex items-start space-x-4 p-3 rounded-lg border-l-8" style="border-color: #FC913A; background-color: #FC913A1A;">
+                            <div class="text-3xl font-black" style="color: #FC913A;">2.</div>
+                            <div><h3 class="font-bold" data-translate-key="acc_doc_2_h">Fotodokumentácia miesta</h3><p class="text-gray-600 text-sm" data-translate-key="acc_doc_2_p">Odfoťte všetko: postavenie áut, poškodenia, brzdné dráhy.</p></div>
+                        </div>
+                        <div class="flex items-start space-x-4 p-3 rounded-lg border-l-8" style="border-color: #F9D423; background-color: #F9D4231A;">
+                            <div class="text-3xl font-black" style="color: #F9D423;">3.</div>
+                            <div><h3 class="font-bold" data-translate-key="acc_doc_3_h">Údaje o druhom účastníkovi</h3><p class="text-gray-600 text-sm" data-translate-key="acc_doc_3_p">Meno, adresa, EČV, a hlavne číslo poistnej zmluvy (PZP).</p></div>
+                        </div>
+                        <div class="flex items-start space-x-4 p-3 rounded-lg border-l-8" style="border-color: #8c8c8c; background-color: #8c8c8c1A;">
+                            <div class="text-3xl font-black" style="color: #8c8c8c;">4.</div>
+                            <div><h3 class="font-bold" data-translate-key="acc_doc_4_h">Získať svedkov</h3><p class="text-gray-600 text-sm" data-translate-key="acc_doc_4_p">Ak nehodu niekto videl, požiadajte ho o kontakt.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <section id="krok4" class="my-10">
+                <h2 class="text-2xl font-bold text-center mb-6" data-translate-key="acc_h2_4">KROK 4: Nahlásenie poisťovni</h2>
+                <p class="text-center max-w-2xl mx-auto mb-8 text-gray-600 text-base" data-translate-key="acc_p8">Posledným, ale kritickým krokom, je nahlásenie škodovej udalosti maklérovi a poisťovni. Nezabudnite na zákonné lehoty.</p>
+                
+                <div class="bg-blue-50 border-l-8 border-blue-500 p-6 rounded-lg mb-8 max-w-2xl mx-auto shadow-lg">
+                    <h3 class="text-xl font-bold text-blue-800 mb-3" data-translate-key="acc_broker_h">Vždy kontaktujte makléra MARSH</h3>
+                    <p class="text-gray-700 mb-4" data-translate-key="acc_broker_p">Všetky poistné udalosti je nutné <strong>bezodkladne hlásiť</strong> maklérovi a v kópii oddeleniu Mobility.</p>
+                    <div class="space-y-2">
+                        <p><strong data-translate-key="phone">Telefón:</strong> <a href="tel:+421902966689" class="text-blue-600 hover:underline font-semibold">+421 902 966 689</a></p>
+                        <p><strong>Email:</strong> <a href="mailto:autoskody@marsh.com" class="text-blue-600 hover:underline font-semibold">autoskody@marsh.com</a></p>
+                    </div>
+                    <a href="tel:+421902966689" class="mt-4 inline-block w-full text-center bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
+                        <span data-translate-key="acc_broker_call">Volať makléra MARSH</span>
+                    </a>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold" data-translate-key="acc_deadline_h">Lehoty na nahlásenie</h3>
+                        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
+                            <div class="bg-gray-100 p-3 rounded-lg border-2 border-dashed border-gray-300">
+                                <p class="text-3xl font-black" style="color: #FF4E50;">15 dní</p>
+                                <p class="font-bold mt-1" data-translate-key="acc_deadline_1">Nehoda na Slovensku</p>
+                            </div>
+                            <div class="bg-gray-100 p-3 rounded-lg border-2 border-dashed border-gray-300">
+                                <p class="text-3xl font-black" style="color: #FC913A;">30 dní</p>
+                                <p class="font-bold mt-1" data-translate-key="acc_deadline_2">Nehoda v zahraničí</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mt-4 text-sm max-w-xl mx-auto" data-translate-key="acc_deadline_p">Nemeškajte. Po uplynutí týchto lehôt môže poisťovňa krátiť alebo úplne zamietnuť poistné plnenie.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- OSTATNÝ OBSAH -->
+        <div id="content-tankovanie-zahranicie">
+            <h2 class="text-2xl font-bold lidl-blue-text mb-4" data-translate-key="fuel_abroad_h2">Použitie tankovacích kariet v zahraničí</h2>
+             <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg mb-6">
+                <h3 class="text-lg font-bold text-blue-800 mb-2" data-translate-key="fuel_abroad_rules_h">Pravidlá pre tankovanie</h3>
+                <p class="text-blue-700" data-translate-key="fuel_abroad_rules_p">Pravidlá sú totožné ako pri tankovaní na Slovensku. Podrobnosti sú popísané v kategórii <strong>Tankovanie</strong>.</p>
+            </div>
+            <h3 class="text-xl font-semibold mt-6 mb-4 lidl-blue-text" data-translate-key="fuel_abroad_partners_h">Sieť partnerských čerpacích staníc s použitím našich tankovacích kariet</h3>
+            <div class="space-y-6">
+                <div>
+                    <h4 class="text-lg font-semibold mb-2" data-translate-key="fuel_abroad_omv_h">OMV (Karta Routex)</h4>
+                    <p class="mb-2 text-gray-600" data-translate-key="fuel_abroad_omv_p">Akceptačnú sieť, kde Vašu Routex kartu môžete použiť, nájdete na oficiálnej stránke. Na ľavej strane použite funkciu "Site Finder" na vyhľadanie staníc.</p>
+                    <a href="http://www.routex.com" target="_blank" rel="noopener noreferrer" class="inline-block bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors" data-translate-key="fuel_abroad_omv_a">
+                        Navštíviť www.routex.com
+                    </a>
+                </div>
+                <div class="border-t pt-6">
+                    <h4 class="text-lg font-semibold mb-2" data-translate-key="fuel_abroad_shell_h">SHELL</h4>
+                    <p class="mb-2 text-gray-600" data-translate-key="fuel_abroad_shell_p">Keďže offline zoznam nie je možné udržiavať neustále aktualizovaný, prosíme vás, aby ste použili náš vyhľadávač čerpacích staníc („verejne” dostupný na našich stránkach). Prednastavený filter je vrátane partnerských staníc.</p>
+                    <a href="https://www.shell.sk/firemni-zakaznici/rozsiahla-siet.html#iframe=Lz9sb2NhbGU9c2tfU0sjL0A0OC44OTMwNiwxNi45NDU0Nyw3eg" target="_blank" rel="noopener noreferrer" class="inline-block bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors" data-translate-key="fuel_abroad_shell_a">
+                        Otvoriť vyhľadávač Shell
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div id="content-porucha">
+             <h2 class="text-2xl font-bold lidl-blue-text mb-4" data-translate-key="break_h2">Porucha vozidla</h2>
+             <p class="mb-4" data-translate-key="break_p1">Ak je vaše vozidlo nepojazdné z dôvodu technickej poruchy, postupujte nasledovne:</p>
+             <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded mb-6">
+                 <p class="font-bold text-lg mb-2" data-translate-key="break_contact_h">Kontaktujte NONSTOP Hotlinku Ayvens / LeasePlan:</p>
+                 <div class="mt-3 flex flex-col sm:flex-row gap-3">
+                    <div class="flex-1 text-center">
+                        <p class="text-2xl font-bold text-blue-600">0850 888 777</p>
+                        <a href="tel:0850888777" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg>
+                            <span data-translate-key="break_call_sk">Volať na Slovensku</span>
+                        </a>
+                    </div>
+                    <div class="flex-1 text-center">
+                        <p class="text-2xl font-bold text-gray-700">+421 904 333 230</p>
+                        <a href="tel:+421904333230" class="w-full bg-gray-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-700 transition-colors flex items-center justify-center gap-2 text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg>
+                            <span data-translate-key="break_call_abroad">Volať zo Zahraničia</span>
+                        </a>
+                    </div>
+                </div>
+                 <p class="mt-4" data-translate-key="break_p2">Operátor vám zabezpečí odťah vozidla a v prípade potreby aj náhradné vozidlo.</p>
+             </div>
+              <div class="space-y-4">
+                 <div class="accordion-item">
+                     <button class="accordion-header flex justify-between items-center w-full p-3 bg-gray-100 rounded-lg text-left font-semibold">
+                         <span data-translate-key="break_specific_cases">Špecifické prípady (defekt, strata kľúčov)</span>
+                         <span>+</span>
+                     </button>
+                     <div class="accordion-content hidden p-4 bg-gray-50 border rounded-b-lg">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Karta 1: Defekt -->
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <h4 class="font-bold text-lg mb-2 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                    </svg>
+                                    <span data-translate-key="break_flat_tire">Defekt</span>
+                                </h4>
+                                <ul class="list-disc list-inside space-y-2 text-sm text-gray-600">
+                                    <li data-translate-key="break_flat_1"><strong>Cez víkend:</strong> Oprava v najbližšom pneuservise (úhrada súkromne, preplatenie cez Concur).</li>
+                                    <li data-translate-key="break_flat_2"><strong>V zahraničí:</strong> Riešiť individuálne kontaktovaním asistenčnej služby Kooperativa.</li>
+                                    <li data-translate-key="break_flat_3"><strong>Nepojazdné vozidlo:</strong> Volať asistenčnú službu Kooperativa pre odťah.</li>
+                                    <li data-translate-key="break_flat_4"><strong>Poškodený disk:</strong> Riešiť ako poistnú udalosť cez makléra MARSH.</li>
+                                </ul>
+                            </div>
+                            <!-- Karta 2: Zabuchnuté kľúče -->
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                 <h4 class="font-bold text-lg mb-2 flex items-center"><span class="text-2xl mr-2">🔑</span> <span data-translate-key="break_locked_keys">Zabuchnuté kľúče</span></h4>
+                                 <ul class="list-disc list-inside space-y-2 text-sm text-gray-600">
+                                    <li data-translate-key="break_locked_1">Skúste otvoriť cez aplikáciu MyBMW.</li>
+                                    <li data-translate-key="break_locked_2">Alternatívne objednať kľúčovú službu cez Kooperativu.</li>
+                                    <li data-translate-key="break_locked_3"><strong>Urgentne (mimo prac. doby):</strong> Volať Tomáš Nedelka na <a href="tel:0911115093" class="underline font-semibold">0911 115 093</a>.</li>
+                                 </ul>
+                            </div>
+                            <!-- Karta 3: Strata kľúčov -->
+                            <div class="bg-white p-4 rounded-lg shadow col-span-1 md:col-span-2">
+                                 <h4 class="font-bold text-lg mb-2 flex items-center"><span class="text-2xl mr-2">🔑❓</span> <span data-translate-key="break_lost_keys">Strata kľúčov</span></h4>
+                                 <ol class="list-decimal list-inside space-y-2 text-sm text-gray-600">
+                                    <li data-translate-key="break_lost_1">Okamžite zložiť EČV z vozidla.</li>
+                                    <li data-translate-key="break_lost_2">Pokúsiť sa otvoriť cez appku a vybrať osobné veci.</li>
+                                    <li data-translate-key="break_lost_3">Komunikovať s odd. Mobility.</li>
+                                    <li data-translate-key="break_lost_4">Zabezpečiť prevoz do servisu BMW na zablokovanie starého a objednanie nového kľúča.</li>
+                                 </ol>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+             </div>
+         </div>
+         <div id="content-servis">
+            <h2 class="text-2xl font-bold lidl-blue-text mb-2" data-translate-key="serv_h2">Servis a Oprava Vozidla</h2>
+            <p class="text-gray-600 mb-6" data-translate-key="serv_p1">Pravidelný servis a opravy zabezpečuje spoločnosť Ayvens / LeasePlan v sieti zmluvných partnerov.</p>
+            
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg mb-6">
+                 <h3 class="text-lg font-bold text-blue-800 mb-2" data-translate-key="serv_order_h">Objednávka do servisu</h3>
+                 <p class="text-blue-700" data-translate-key="serv_order_p">Pre objednanie servisu, opravy alebo prezutia volajte zákaznícku linku Ayvens / LeasePlan:</p>
+                 <div class="mt-3 flex flex-col sm:flex-row gap-3">
+                    <div class="flex-1 text-center">
+                        <p class="text-2xl font-bold text-blue-600">0850 888 777</p>
+                        <a href="tel:0850888777" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg>
+                            <span data-translate-key="serv_call_sk">Volať na Slovensku</span>
+                        </a>
+                    </div>
+                    <div class="flex-1 text-center">
+                        <p class="text-2xl font-bold text-gray-700">+421 904 333 230</p>
+                        <a href="tel:+421904333230" class="w-full bg-gray-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-700 transition-colors flex items-center justify-center gap-2 text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg>
+                            <span data-translate-key="serv_call_abroad">Volať zo Zahraničia</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h4 class="font-bold text-lg mb-2 flex items-center"><span class="text-2xl mr-2">🚗</span><span data-translate-key="serv_glass_h">Oprava čelného skla</span></h4>
+                    <p class="text-sm text-gray-600" data-translate-key="serv_glass_p">Vždy riešiť cez <strong>Autosklo HORNET</strong> na vyššie uvedených kontaktoch.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h4 class="font-bold text-lg mb-2 flex items-center"><span class="text-2xl mr-2">🛠️</span><span data-translate-key="serv_partners_h">Servisní partneri</span></h4>
+                    <p class="text-sm text-gray-600" data-translate-key="serv_partners_p"><strong>Volkswagen:</strong> sieť TODOS<br><strong>BMW:</strong> sieť BMW</p>
+                </div>
+            </div>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-lg">
+                 <h3 class="font-bold text-lg mb-2" data-translate-key="serv_warning_h">Dôležité upozornenie</h3>
+                 <p data-translate-key="serv_warning_p">Servisný interval nesmie byť za žiadnych okolností prekročený! Objednávajte sa s dostatočným predstihom. Nedodržanie intervalu môže viesť k strate záruky a zosobneniu nákladov.</p>
+            </div>
+         </div>
+         <div id="content-pravidla">
+             <h2 class="text-2xl font-bold lidl-blue-text mb-4" data-translate-key="rules_h2">Základné pravidlá používania vozidla</h2>
+             <ul class="space-y-3">
+                 <li class="flex items-start"><span class="mr-2 text-xl">🚭</span><div data-translate-key="rules_1"><strong class="block">Zákaz fajčenia:</strong> Vo všetkých služobných vozidlách platí prísny zákaz fajčenia!</div></li>
+                 <li class="flex items-start"><span class="mr-2 text-xl">📄</span><div data-translate-key="rules_2"><strong class="block">Doklady a karty:</strong> Nikdy nenechávajte doklady od vozidla a tankovacie karty vo vozidle.</div></li>
+                 <li class="flex items-start"><span class="mr-2 text-xl">🔑</span><div data-translate-key="rules_3"><strong class="block">Zamykanie:</strong> Pri každom opustení vozidla je užívateľ povinný ho riadne uzamknúť a vziať si kľúč.</div></li>
+                 <li class="flex items-start"><span class="mr-2 text-xl">🧼</span><div data-translate-key="rules_4"><strong class="block">Čistota:</strong> Služobné vozidlo je užívateľ povinný udržiavať v čistote. Čistenie interiéru na náklady spol. Lidl je zakázané.</div></li>
+                 <li class="flex items-start"><span class="mr-2 text-xl">🛡️</span><div data-translate-key="rules_5"><strong class="block">Poistenie:</strong> Vozidlo je poistené proti krádeži a poškodeniu. Poistenie sa nevzťahuje na súkromné veci vo vozidle.</div></li>
+             </ul>
+         </div>
+        
+        <div id="content-tankovanie">
+            <h2 class="text-2xl font-bold lidl-blue-text mb-2" data-translate-key="fuel_h2">Pravidlá pre Tankovanie</h2>
+            <p class="text-gray-600 mb-6" data-translate-key="fuel_p1">Dodržiavajte tieto pravidlá pri používaní tankovacích kariet.</p>
+
+            <div class="space-y-6">
+                <!-- Povolené služby -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span data-translate-key="fuel_allowed_h">Povolené služby a pravidlá</span>
+                    </h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start"><span class="mr-2">✔️</span> <span data-translate-key="fuel_allowed_1">Zadávanie stavu tachometra je pri platbe kartou povinné.</span></li>
+                        <li class="flex items-start"><span class="mr-2">✔️</span> <span data-translate-key="fuel_allowed_2">Umytie vozidla je povolené (iba najlacnejší program, max. 1x týždenne).</span></li>
+                        <li class="flex items-start"><span class="mr-2">✔️</span> <span data-translate-key="fuel_allowed_3">Pri tankovaní do požičaného vozidla zadajte stav km ako "1".</span></li>
+                    </ul>
+                </div>
+
+                <!-- Zakázané úkony -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span data-translate-key="fuel_forbidden_h">Zakázané úkony</span>
+                    </h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start"><span class="mr-2">❌</span> <span data-translate-key="fuel_forbidden_1">Kupovať diaľničné známky alebo platiť mýtne poplatky pri súkromných cestách.</span></li>
+                        <li class="flex items-start"><span class="mr-2">❌</span> <span data-translate-key="fuel_forbidden_2">Tankovať špeciálne/prémiové pohonné hmoty (napr. V-Power, M-Motion a pod.).</span></li>
+                        <li class="flex items-start"><span class="mr-2">❌</span> <span data-translate-key="fuel_forbidden_3">PIN kód nesmie byť vyznačený na karte ani uchovávaný spolu s ňou.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Strata karty -->
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg">
+                    <h3 class="text-lg font-bold text-yellow-800 mb-2 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span data-translate-key="fuel_lost_card_h">Strata alebo odcudzenie karty</span>
+                    </h3>
+                    <p class="text-yellow-700" data-translate-key="fuel_lost_card_p">V prípade straty je nutné <strong>okamžite hlásiť</strong> udalosť oddeleniu Mobility na email <a href="mailto:mobilita@lidl.sk" class="underline font-semibold">mobilita@lidl.sk</a>. Počas doby do vystavenia nových kariet (2-3 týždne) tankuje zamestnanec za súkromné prostriedky a náklady si vyúčtuje cez Concur.</p>
+                </div>
+            </div>
+        </div>
+        <div id="content-udrzba">
+            <h2 class="text-2xl font-bold lidl-blue-text mb-2" data-translate-key="maint_h2">Údržba a Pneumatiky</h2>
+            <p class="text-gray-600 mb-6" data-translate-key="maint_p1">Okrem pravidelných servisných prehliadok je vodič zodpovedný aj za bežnú údržbu vozidla.</p>
+
+            <div class="accordion-item mb-6">
+                <button class="accordion-header flex justify-between items-center w-full p-3 bg-gray-100 rounded-lg text-left font-semibold">
+                    <span data-translate-key="maint_tires_sk_h">Prezúvanie pneumatík na Slovensku</span>
+                    <span>+</span>
+                </button>
+                <div class="accordion-content hidden p-4 bg-gray-50 border rounded-b-lg space-y-4">
+                    <div>
+                        <h4 class="font-bold text-lg mb-2 text-blue-800" data-translate-key="maint_winter_h">Zimné pneumatiky: Povinnosť a odporúčania</h4>
+                        <p class="text-sm text-gray-700 mb-2" data-translate-key="maint_winter_p1">Zákon o cestnej premávke ukladá vodičom osobných vozidiel povinnosť použiť zimné pneumatiky vtedy, ak je na vozovke súvislá vrstva snehu, ľad alebo námraza. Toto pravidlo platí bez ohľadu na dátum v kalendári.</p>
+                        <p class="text-sm text-gray-700 mb-2" data-translate-key="maint_winter_p2">Všeobecným a osvedčeným odporúčaním je prezuť na zimné pneumatiky, keď priemerná denná teplota klesne pod 7 °C. Zmes letných pneumatík pri nízkych teplotách tvrdne, čím stráca priľnavosť a predlžuje sa brzdná dráha.</p>
+                        <ul class="list-disc list-inside space-y-1 text-sm text-gray-700">
+                            <li data-translate-key="maint_winter_l1">Minimálna hĺbka dezénu pre zimné pneumatiky na osobných vozidlách je zákonom stanovená na <strong>3 mm</strong>. Odborníci však z bezpečnostných dôvodov odporúčajú výmenu už pri hĺbke <strong>4 mm</strong>.</li>
+                            <li data-translate-key="maint_winter_l2">Zimné pneumatiky sú označené symbolom "M+S", "M.S", "M&S" alebo symbolom alpského štítu (3PMSF - Three-Peak Mountain Snowflake).</li>
+                        </ul>
+                    </div>
+                    <div class="border-t pt-4">
+                        <h4 class="font-bold text-lg mb-2 text-blue-800" data-translate-key="maint_summer_h">Letné pneumatiky: Kedy je správny čas na prezutie?</h4>
+                        <p class="text-sm text-gray-700 mb-2" data-translate-key="maint_summer_p1">Zákon nestanovuje povinnosť prezuť na letné pneumatiky. Jazda na zimných pneumatikách v letných mesiacoch však nie je bezpečná ani ekonomická. Zimné pneumatiky sa pri vyšších teplotách rýchlejšie opotrebúvajú, zvyšujú spotrebu paliva a majú horšie brzdné vlastnosti na suchej a mokrej vozovke.</p>
+                        <p class="text-sm text-gray-700 mb-2" data-translate-key="maint_summer_p2">Ideálnym časom na prezutie na letné pneumatiky je, keď sa priemerné denné teploty stabilne držia nad 7 °C.</p>
+                        <ul class="list-disc list-inside space-y-1 text-sm text-gray-700">
+                            <li data-translate-key="maint_summer_l1">Minimálna povolená hĺbka dezénu pre letné pneumatiky je <strong>1,6 mm</strong>. Z bezpečnostného hľadiska sa však odporúča pneumatiky vymeniť, ak hĺbka dezénu klesne pod <strong>3 mm</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span data-translate-key="maint_tires_h">Objednávka na prezutie pneumatík</span>
+                </h3>
+                <p class="text-gray-700" data-translate-key="maint_tires_p">Objednáva sa cez zákaznícku linku Ayvens / LeasePlan:</p>
+                <div class="mt-3">
+                    <p class="text-2xl font-bold text-blue-600">0850 888 777</p>
+                    <a href="tel:0850888777" class="mt-1 inline-block bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 text-center max-w-xs">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg>
+                        <span data-translate-key="maint_call_customer_line">Volať Zákaznícku Linku</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h4 class="font-bold text-lg mb-2 flex items-center"><span class="text-2xl mr-2">💧</span><span data-translate-key="maint_fluids_h">Olej a voda do ostrekovačov</span></h4>
+                    <p class="text-sm text-gray-600" data-translate-key="maint_fluids_p">Sú k dispozícii na recepcii centrály alebo u technikov skladu proti podpisu. V servise sa tieto kvapaliny nedopĺňajú na náklady firmy.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h4 class="font-bold text-lg mb-2 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <span data-translate-key="maint_check_h">Kontrola stavu vozidla</span>
+                    </h4>
+                    <p class="text-sm text-gray-600" data-translate-key="maint_check_p">Pravidelne sledujte funkčnosť vozidla a stav prevádzkových kvapalín, o potrebe doplnenia sa dozviete z infopanelu vozidla i v aplikácii MY BMW.</p>
+                    <button id="go-to-my-bmw-btn" class="mt-2 text-sm bg-blue-100 text-blue-700 font-semibold py-2 px-4 rounded-lg hover:bg-blue-200 transition-colors" data-translate-key="go_to_my_bmw">
+                        Prejsť na sekciu MY BMW
+                    </button>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md mt-6">
+                <h4 class="font-bold text-lg mb-2 flex items-center"><span class="text-2xl mr-2">🔩</span><span data-translate-key="maint_bolt_h">Stratený poistný šrób od kolesa</span></h4>
+                <p class="text-sm text-gray-600" data-translate-key="maint_bolt_p">Nástavec sa zvyčajne nachádza v kufri. Ak ho servis nevie nájsť, je potrebné vymeniť celú sadu poistných šróbov.</p>
+            </div>
+        </div>
+        
+        <div id="content-nove-auto">
+            <h2 class="text-2xl font-bold lidl-blue-text mb-2" data-translate-key="newcar_h2">Proces Nového Vozidla</h2>
+            <p class="text-gray-600 mb-6" data-translate-key="newcar_p1">Pridelenie a objednanie nového služobného vozidla sa riadi internými pravidlami spoločnosti.</p>
+            
+            <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                    <span data-translate-key="newcar_assign_h">Pridelenie Vozidla</span>
+                </h3>
+                <p class="text-gray-700 mb-4" data-translate-key="newcar_assign_p">Služobné vozidlo sa prideľuje zamestnancovi na základe jeho pracovnej pozície a interných smerníc.</p>
+                <ul class="space-y-3">
+                    <li class="flex items-start">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-green-500 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        <span data-translate-key="newcar_assign_l1"><strong>Podmienky:</strong> Nárok na vozidlo a jeho kategória sú určené pracovnou pozíciou. Používanie na súkromné účely vyžaduje podpísanú dohodu.</span>
+                    </li>
+                    <li class="flex items-start">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-green-500 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        <span data-translate-key="newcar_assign_l2"><strong>Protokol:</strong> Pridelenie aj odovzdanie vozidla sa vždy zaznamenáva do preberacieho protokolu.</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+                    <span data-translate-key="newcar_order_h">Objednanie Nového Vozidla</span>
+                </h3>
+                <p class="text-gray-700 mb-4" data-translate-key="newcar_order_p">Proces objednania je plne v kompetencii oddelenia Mobility a riadi sa schváleným modelom obmeny.</p>
+                <ul class="space-y-3">
+                    <li class="flex items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-green-500 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        <span data-translate-key="newcar_order_l1"><strong>Plán obmeny:</strong> Objednávka sa riadi vekom aktuálneho vozidla a platným mesačným modelom obmeny.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-green-500 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        <span data-translate-key="newcar_order_l2"><strong>Nenárokovateľnosť:</strong> Nárok na objednanie nového vozidla nie je zo strany zamestnanca automaticky nárokovateľný.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="content-kniha-jazd">
+            <h2 class="text-2xl font-bold lidl-blue-text mb-2" data-translate-key="logbook_h2">Elektronická Kniha Jázd (EKJ)</h2>
+            <p class="text-gray-600 mb-6" data-translate-key="logbook_p1">Správne a včasné vedenie knihy jázd je kľúčovou povinnosťou každého vodiča.</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                    <span data-translate-key="logbook_rules_h">Základné Pravidlá a Povinnosti</span>
+                </h3>
+                <ul class="space-y-3">
+                    <li class="flex items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-green-500 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        <span data-translate-key="logbook_rules_l1"><strong>Povinné vedenie:</strong> Každý užívateľ je povinný viesť EKJ.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-green-500 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        <span data-translate-key="logbook_rules_l2"><strong>Aktivácia:</strong> Aktivácia vozidla a kariet v systéme prebehne do 3 týždňov od prebratia vozidla.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-green-500 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        <span data-translate-key="logbook_rules_l3"><strong>Súkromné vs. Služobné jazdy:</strong> Dôsledne rozlišujte medzi súkromnými a služobnými jazdami. Cesta medzi bydliskom a prácou je vždy súkromná.</span>
+                    </li>
+                     <li class="flex items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-green-500 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        <span data-translate-key="logbook_rules_l4"><strong>Voľné dni:</strong> Počas dovolenky a dní pracovného voľna musia byť všetky kilometre vykázané ako súkromné.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg mb-6">
+                 <h3 class="text-lg font-bold text-blue-800 mb-2 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    <span data-translate-key="logbook_deadlines_h">Dôležité Termíny</span>
+                </h3>
+                <ul class="list-disc list-inside text-blue-700 space-y-2">
+                    <li data-translate-key="logbook_deadlines_l1"><strong>Spracovanie jázd:</strong> Vždy spätne za uplynulý mesiac, najneskôr do konca nasledujúceho mesiaca.</li>
+                    <li data-translate-key="logbook_deadlines_l2"><strong>Nahrávanie tankovaní (SK):</strong> Prebieha automaticky 2. pracovný deň nasledujúceho mesiaca.</li>
+                    <li data-translate-key="logbook_deadlines_l3"><strong>Nahrávanie tankovaní (Zahraničie):</strong> Synchronizujte až po 20. dni nasledujúceho mesiaca.</li>
+                </ul>
+            </div>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg">
+                <h3 class="text-lg font-bold text-yellow-800 mb-2 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                    <span data-translate-key="logbook_problems_h">Riešenie Problémov</span>
+                </h3>
+                <p class="text-yellow-700" data-translate-key="logbook_problems_p">Akékoľvek problémy s EKJ (nefunkčnosť, chybné párovanie tankovaní, atď.) nahláste bezodkladne prostredníctvom <strong class="font-semibold">IT ticketu</strong> s čo najpresnejším popisom problému.</p>
+            </div>
+        </div>
+        
+        <div id="content-pokuty">
+            <h2 class="text-2xl font-bold lidl-blue-text mb-2" data-translate-key="fines_h2">Pokuty a Priestupky</h2>
+            <p class="text-gray-600 mb-6" data-translate-key="fines_p1">Zodpovednosť za dopravné priestupky a s nimi spojené pokuty nesie vždy vodič vozidla.</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-bold text-gray-800 mb-4" data-translate-key="fines_process_h">Proces riešenia pokuty</h3>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <div class="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold mr-4">1</div>
+                        <div>
+                            <h4 class="font-semibold" data-translate-key="fines_step1_h">Doručenie pokuty</h4>
+                            <p class="text-gray-600 text-sm" data-translate-key="fines_step1_p">Všetky pokuty (domáce aj zahraničné), ktoré neboli uhradené na mieste, sú doručené spoločnosti Lidl.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold mr-4">2</div>
+                        <div>
+                            <h4 class="font-semibold" data-translate-key="fines_step2_h">Identifikácia a výzva</h4>
+                            <p class="text-gray-600 text-sm" data-translate-key="fines_step2_p">Oddelenie Mobility identifikuje vodiča a zašle mu emailom výzvu na úhradu pokuty v plnej výške.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold mr-4">3</div>
+                        <div>
+                            <h4 class="font-semibold" data-translate-key="fines_step3_h">Povinnosť uhradiť a odoslať doklad</h4>
+                            <p class="text-gray-600 text-sm" data-translate-key="fines_step3_p">Zamestnanec je povinný pokutu uhradiť a následne zaslať doklad o úhrade na email: <a href="mailto:pokuty@lidl.sk" class="text-blue-600 underline font-medium">pokuty@lidl.sk</a>.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mt-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.21 3.03-1.742 3.03H4.42c-1.532 0-2.492-1.696-1.742-3.03l5.58-9.92zM10 13a1 1 0 110-2 1 1 0 010 2zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-red-800" data-translate-key="fines_warning_h">Dôležité upozornenie</h3>
+                        <div class="mt-2 text-sm text-red-700">
+                            <p data-translate-key="fines_warning_p">Ak zamestnanec neuhradí pokutu a nezašle doklad, celá suma (vrátane prípadných penále) bude postúpená právnemu oddeleniu a následne stiahnutá zo mzdy zamestnanca.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="content-poistenie">
+            <h2 class='text-2xl font-bold lidl-blue-text mb-2' data-translate-key="ins_h2_title">Aktuálne máme vozidlá poistené cez Kooperatívu</h2>
+            <img src="https://www.kooperativa.sk/assets/img/logo/logo-kooperativa-color.png" alt="Logo Kooperativa" class="h-10 mb-4" onerror="this.style.display='none';">
+            <p class="text-gray-600 mb-6" data-translate-key="ins_p1">Všetky naše vozidlá majú i havarijné poistenie KASKO.</p>
+            
+            <div class="space-y-6">
+                <!-- Hlásenie poistnej udalosti -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-2.036 9.284-5.116M15.354 21.118c-3.847-1.337-7.13-4.1-9.284-7.927" />
+                        </svg>
+                        <span data-translate-key="ins_report_h">Hlásenie poistnej udalosti</span>
+                    </h3>
+                    <p class="text-gray-700" data-translate-key="ins_report_p">
+                        Všetky poistné udalosti je nutné <strong>bezodkladne hlásiť</strong> maklérovi MARSH a v kópii oddeleniu Mobility.
+                    </p>
+                    <div class="my-4 p-4 bg-gray-100 rounded-lg border border-gray-200">
+                        <strong class="block text-gray-800" data-translate-key="ins_broker_contact">Kontakt na makléra MARSH:</strong>
+                        <p class="mt-2"><span data-translate-key="phone">Telefón:</span> <a href="tel:+421902966689" class="text-blue-600 hover:underline font-semibold">+421 902 966 689</a></p>
+                        <p class="mt-1">Email: <a href="mailto:autoskody@marsh.com" class="text-blue-600 hover:underline font-semibold">autoskody@marsh.com</a></p>
+                    </div>
+                    <button id="go-to-step3-btn" class="mt-4 w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors" data-translate-key="ins_show_procedure">
+                        Zobraziť postup
+                    </button>
+                </div>
+
+                <!-- Poistná udalosť v zahraničí -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2h10a2 2 0 002-2v-1a2 2 0 012-2h1.945M7.704 21H16.296a2 2 0 001.945-1.516l1.141-6.275a2 2 0 00-1.945-2.484H6.564a2 2 0 00-1.945 2.484l1.141 6.275A2 2 0 007.704 21z" />
+                        </svg>
+                        <span data-translate-key="ins_abroad_h">Poistná udalosť v zahraničí</span>
+                    </h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="mr-2">✔️</span>
+                            <span data-translate-key="ins_abroad_l1">Postupuje sa individuálne cez makléra <strong>MARSH</strong>.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">✔️</span>
+                            <span data-translate-key="ins_abroad_l2">Zoznam povolených krajín, kam môžete vycestovať, je uvedený na <strong>zelenej karte</strong> vo vozidle.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+         <div id="content-kontakty">
+             <h2 class="text-2xl font-bold lidl-blue-text mb-4" data-translate-key="contacts_h2">Dôležité kontakty</h2>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                 <div class="bg-gray-100 p-4 rounded-lg">
+                     <h3 class="font-bold text-lg mb-2" data-translate-key="contacts_assist_h">Asistencia a Servis</h3>
+                     <div class="space-y-4">
+                        <div>
+                            <strong class="block" data-translate-key="contacts_assist_1h">NONSTOP Hotlinka (Ayvens) - SK</strong>
+                            <p class="text-xl font-bold text-blue-600">0850 888 777</p>
+                            <a href="tel:0850888777" class="mt-1 inline-block bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors" data-translate-key="contacts_call">Volať</a>
+                        </div>
+                        <div>
+                            <strong class="block" data-translate-key="contacts_assist_2h">NONSTOP Hotlinka (Ayvens) - Zahraničie</strong>
+                            <p class="text-xl font-bold text-gray-700">+421 904 333 230</p>
+                            <a href="tel:+421904333230" class="mt-1 inline-block bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors" data-translate-key="contacts_call_2">Volať</a>
+                        </div>
+                        <div class="border-t pt-4">
+                            <strong class="block" data-translate-key="contacts_assist_3h">Odťah Kooperativa (mimo prac. doby) - SK</strong>
+                             <p class="text-xl font-bold text-blue-600">18 118</p>
+                            <a href="tel:18118" class="mt-1 inline-block bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors" data-translate-key="contacts_call_3">Volať</a>
+                        </div>
+                         <div>
+                            <strong class="block" data-translate-key="contacts_assist_4h">Odťah Kooperativa - Zahraničie</strong>
+                            <p class="text-xl font-bold text-gray-700">+421 2 6353 2236</p>
+                            <a href="tel:+421263532236" class="mt-1 inline-block bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors" data-translate-key="contacts_call_4">Volať</a>
+                        </div>
+                     </div>
+                 </div>
+                  <div class="bg-gray-100 p-4 rounded-lg">
+                     <h3 class="font-bold text-lg mb-2" data-translate-key="contacts_admin_h">Hlásenie udalostí a administratíva</h3>
+                      <div class="space-y-4">
+                        <div>
+                            <strong class="block" data-translate-key="contacts_admin_1h">Poistné udalosti (MARSH)</strong>
+                            <p class="text-xl font-bold text-blue-600">+421 902 966 689</p>
+                            <a href="tel:+421902966689" class="mt-1 inline-block bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors" data-translate-key="contacts_call_5">Volať</a>
+                        </div>
+                        <div>
+                            <strong class="block" data-translate-key="contacts_admin_2h">Email pre PU (MARSH)</strong>
+                            <a href="mailto:autoskody@marsh.com" class="text-blue-600 underline">autoskody@marsh.com</a>
+                        </div>
+                        <div>
+                            <strong class="block" data-translate-key="contacts_admin_3h">Email pre Mobilitu (vždy v kópii)</strong>
+                            <a href="mailto:mobilita@lidl.sk" class="text-blue-600 underline">mobilita@lidl.sk</a>
+                        </div>
+                         <div class="border-t pt-4">
+                            <strong class="block" data-translate-key="contacts_admin_4h">Strata kľúča (urgentne mimo prac. doby)</strong>
+                            <p data-translate-key="contacts_admin_4p">Tomáš Nedelka: <a href="tel:0911115093" class="underline text-lg">0911 115 093</a></p>
+                        </div>
+                      </div>
+                 </div>
+             </div>
+         </div>
+         <div id="content-my-bmw">
+            <h2 class="text-2xl font-bold lidl-blue-text mb-4" data-translate-key="bmw_h2">Aplikácia My BMW</h2>
+            <p class="mb-6 text-gray-600" data-translate-key="bmw_p1">Aplikácia My BMW je vaše digitálne prepojenie s vozidlom. Ponúka inteligentné funkcie pre plánovanie jázd, kontrolu stavu vozidla a vzdialené ovládanie, všetko pohodlne z vášho smartfónu.</p>
+        
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- ... obsah sekcie My BMW ... -->
+            </div>
+        
+            <div class="mt-8 bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg">
+                <h3 class="font-bold text-lg mb-2" data-translate-key="bmw_important_h">Dôležité:</h3>
+                <p class="text-gray-700" data-translate-key="bmw_important_p">Aplikácia je kompatibilná so všetkými vozidlami BMW. Pre plnú funkčnosť je potrebné spárovať aplikáciu s vaším vozidlom. V prípade problémov s párovaním alebo funkčnosťou aplikácie kontaktujte servisného poradcu BMW.</p>
+            </div>
+
+            <div class="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="https://apps.apple.com/sk/app/my-bmw/id1519034299" target="_blank" rel="noopener noreferrer" class="bg-black text-white font-semibold py-3 px-6 rounded-lg flex items-center gap-3 hover:bg-gray-800 transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.535 5.203a3.26 3.26 0 0 0-2.148-.738c-.838 0-1.62.24-2.34.738-.72.497-1.253 1.21-1.598 2.138h7.092a3.25 3.25 0 0 1-1.006-2.138zm-6.848 2.138c-.345-.928-.878-1.64-1.598-2.138-.72.497-1.502-.738-2.34-.738a3.26 3.26 0 0 0-2.148.738A3.25 3.25 0 0 1 5.607 7.34h7.08zm6.54 1.862H4.773c-1.21 0-2.227.838-2.483 1.956a2.47 2.47 0 0 0 .786 2.227c.498.444 1.157.69 1.84.69.682 0 1.34-.246 1.84-.69.497-.444.785-1.06.785-1.73h6.918c0 .67.288 1.286.786 1.73.498.444 1.156.69 1.839.69.682 0 1.34-.246 1.84-.69.497-.444.785-1.06.785-1.73.054-1.118-.918-2.004-2.126-2.004z"></path></svg>
+                    <div>
+                        <span class="text-xs" data-translate-key="bmw_apple_1">Stiahnuť na</span>
+                        <span class="block text-lg font-bold" data-translate-key="bmw_apple_2">App Store</span>
+                    </div>
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=de.bmw.connected.mobile20.row" target="_blank" rel="noopener noreferrer" class="bg-black text-white font-semibold py-3 px-6 rounded-lg flex items-center gap-3 hover:bg-gray-800 transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21.53,9.531,5.568.416a2.384,2.384,0,0,0-2.284,0,2.33,2.33,0,0,0-1.2,2.071V21.513a2.33,2.33,0,0,0,1.2,2.071,2.384,2.384,0,0,0,2.284,0L21.53,14.469a2.33,2.33,0,0,0,0-4.137ZM4.084,21.513V2.487L11.7,12Zm15.449-8.04L13.1,12l6.433-4.432a.481.481,0,0,1,.5.426v8.01a.481.481,0,0,1-.5.426Z"></path></svg>
+                    <div>
+                        <span class="text-xs" data-translate-key="bmw_google_1">ZÍSKAŤ NA</span>
+                        <span class="block text-lg font-bold" data-translate-key="bmw_google_2">Google Play</span>
+                    </div>
+                </a>
+            </div>
+            <div class="mt-8">
+                <h3 class="text-xl font-bold lidl-blue-text mb-4 text-center" data-translate-key="bmw_video_h">Video Návod</h3>
+                <div class="aspect-video w-full">
+                    <iframe class="w-full h-full rounded-lg shadow-lg" src="https://www.youtube.com/embed/OsYQpqw8rCo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- PREKLADY ---
+        const translations = {
+            sk: {
+                main_title: "Príručka pre Vodičov",
+                main_subtitle: "Váš interaktívny sprievodca pre služobné vozidlá Lidl",
+                quick_actions_title: "Rýchle Akcie a Núdzové Situácie",
+                accident_title: "Mám nehodu",
+                accident_subtitle: "Okamžitý postup krok za krokom.",
+                breakdown_title: "Pokazilo sa mi auto",
+                breakdown_subtitle: "Kontakt na asistenčnú službu.",
+                service_title: "Potrebujem servis",
+                service_subtitle: "Objednanie a kontakty.",
+                categories_title: "Informačné Kategórie",
+                nav_rules: "Základné Pravidlá",
+                nav_fueling: "Tankovanie",
+                nav_fueling_abroad: "Tankovanie v Zahraničí",
+                nav_maintenance: "Údržba a Pneu",
+                nav_insurance: "Poistné Udalosti",
+                nav_logbook: "Kniha Jázd",
+                nav_fines: "Pokuty",
+                nav_new_car: "Nové Vozidlo",
+                nav_my_bmw: "MY BMW",
+                nav_contacts: "Dôležité Kontakty",
+                phone: "Telefón:",
+                go_to_my_bmw: "Prejsť na sekciu MY BMW",
+                acc_h1: "DOPRAVNÁ NEHODA",
+                acc_p1: "Zachovajte pokoj. Tu je váš sprievodca.",
+                acc_h2_1: "KROK 1: Okamžitá bezpečnosť",
+                acc_p2: "Vašou prioritou je zabrániť ďalšej škode a postarať sa o zdravie všetkých zúčastnených.",
+                acc_h3_1: "ZASTAVTE A ZAPNITE SVETLÁ",
+                acc_p3: "Okamžite zastavte a zapnite výstražné svetlá.",
+                acc_h3_2: "VESTA A TROJUHOLNÍK",
+                acc_p4: "Oblečte si vestu a umiestnite trojuholník.",
+                acc_h3_3: "SKONTROLUJTE ZRANENIA",
+                acc_p5: "Ak je niekto zranený, okamžite volajte.",
+                acc_call_1: "Volať Záchranku",
+                acc_call_2: "Volať Linku 112",
+                acc_h2_2: "KROK 2: Volať políciu?",
+                acc_p6: "Zákon presne stanovuje, kedy je prítomnosť polície povinná.",
+                acc_q1: "Je niekto zranený alebo usmrtený?",
+                acc_yes: "ÁNO",
+                acc_no: "NIE",
+                acc_call_police: "VOLAŤ 158",
+                acc_q2: "Je škoda vyššia ako 4000€?",
+                acc_yes_2: "ÁNO",
+                acc_no_2: "NIE",
+                acc_call_police_2: "VOLAŤ 158",
+                acc_q3: "Viete sa dohodnúť na vinníkovi?",
+                acc_no_3: "NIE",
+                acc_call_police_3: "VOLAŤ 158",
+                acc_yes_3: "ÁNO",
+                acc_no_police: "Políciu volať nemusíte.",
+                acc_h2_3: "KROK 3: Správna dokumentácia",
+                acc_p7: "Ak nevoláte políciu, je na vás, aby ste všetko správne zdokumentovali pre poisťovňu.",
+                acc_doc_1_h: "Vyplniť Správu o nehode",
+                acc_doc_1_p: "Najdôležitejší dokument. Musí byť podpísaný oboma stranami.",
+                acc_doc_2_h: "Fotodokumentácia miesta",
+                acc_doc_2_p: "Odfoťte všetko: postavenie áut, poškodenia, brzdné dráhy.",
+                acc_doc_3_h: "Údaje o druhom účastníkovi",
+                acc_doc_3_p: "Meno, adresa, EČV, a hlavne číslo poistnej zmluvy (PZP).",
+                acc_doc_4_h: "Získať svedkov",
+                acc_doc_4_p: "Ak nehodu niekto videl, požiadajte ho o kontakt.",
+                acc_h2_4: "KROK 4: Nahlásenie poisťovni",
+                acc_p8: "Posledným, ale kritickým krokom, je nahlásenie škodovej udalosti maklérovi a poisťovni. Nezabudnite na zákonné lehoty.",
+                acc_broker_h: "Vždy kontaktujte makléra MARSH",
+                acc_broker_p: "Všetky poistné udalosti je nutné <strong>bezodkladne hlásiť</strong> maklérovi a v kópii oddeleniu Mobility.",
+                acc_broker_call: "Volať makléra MARSH",
+                acc_deadline_h: "Lehoty na nahlásenie",
+                acc_deadline_1: "Nehoda na Slovensku",
+                acc_deadline_2: "Nehoda v zahraničí",
+                acc_deadline_p: "Nemeškajte. Po uplynutí týchto lehôt môže poisťovňa krátiť alebo úplne zamietnuť poistné plnenie.",
+                fuel_abroad_h2: "Použitie tankovacích kariet v zahraničí",
+                fuel_abroad_rules_h: "Pravidlá pre tankovanie",
+                fuel_abroad_rules_p: "Pravidlá sú totožné ako pri tankovaní na Slovensku. Podrobnosti sú popísané v kategórii <strong>Tankovanie</strong>.",
+                fuel_abroad_partners_h: "Sieť partnerských čerpacích staníc s použitím našich tankovacích kariet",
+                fuel_abroad_omv_h: "OMV (Karta Routex)",
+                fuel_abroad_omv_p: "Akceptačnú sieť, kde Vašu Routex kartu môžete použiť, nájdete na oficiálnej stránke. Na ľavej strane použite funkciu \"Site Finder\" na vyhľadanie staníc.",
+                fuel_abroad_omv_a: "Navštíviť www.routex.com",
+                fuel_abroad_shell_h: "SHELL",
+                fuel_abroad_shell_p: "Keďže offline zoznam nie je možné udržiavať neustále aktualizovaný, prosíme vás, aby ste použili náš vyhľadávač čerpacích staníc („verejne” dostupný na našich stránkach). Prednastavený filter je vrátane partnerských staníc.",
+                fuel_abroad_shell_a: "Otvoriť vyhľadávač Shell",
+                break_h2: "Porucha vozidla",
+                break_p1: "Ak je vaše vozidlo nepojazdné z dôvodu technickej poruchy, postupujte nasledovne:",
+                break_contact_h: "Kontaktujte NONSTOP Hotlinku Ayvens / LeasePlan:",
+                break_call_sk: "Volať na Slovensku",
+                break_call_abroad: "Volať zo Zahraničia",
+                break_p2: "Operátor vám zabezpečí odťah vozidla a v prípade potreby aj náhradné vozidlo.",
+                break_specific_cases: "Špecifické prípady (defekt, strata kľúčov)",
+                break_flat_tire: "Defekt",
+                break_flat_1: "<strong>Cez víkend:</strong> Oprava v najbližšom pneuservise (úhrada súkromne, preplatenie cez Concur).",
+                break_flat_2: "<strong>V zahraničí:</strong> Riešiť individuálne kontaktovaním asistenčnej služby Kooperativa.",
+                break_flat_3: "<strong>Nepojazdné vozidlo:</strong> Volať asistenčnú službu Kooperativa pre odťah.",
+                break_flat_4: "<strong>Poškodený disk:</strong> Riešiť ako poistnú udalosť cez makléra MARSH.",
+                break_locked_keys: "Zabuchnuté kľúče",
+                break_locked_1: "Skúste otvoriť cez aplikáciu MyBMW.",
+                break_locked_2: "Alternatívne objednať kľúčovú službu cez Kooperativu.",
+                break_locked_3: "<strong>Urgentne (mimo prac. doby):</strong> Volať Tomáš Nedelka na <a href=\"tel:0911115093\" class=\"underline font-semibold\">0911 115 093</a>.",
+                break_lost_keys: "Strata kľúčov",
+                break_lost_1: "Okamžite zložiť EČV z vozidla.",
+                break_lost_2: "Pokúsiť sa otvoriť cez appku a vybrať osobné veci.",
+                break_lost_3: "Komunikovať s odd. Mobility.",
+                break_lost_4: "Zabezpečiť prevoz do servisu BMW na zablokovanie starého a objednanie nového kľúča.",
+                serv_h2: "Servis a Oprava Vozidla",
+                serv_p1: "Pravidelný servis a opravy zabezpečuje spoločnosť Ayvens / LeasePlan v sieti zmluvných partnerov.",
+                serv_order_h: "Objednávka do servisu",
+                serv_order_p: "Pre objednanie servisu, opravy alebo prezutia volajte zákaznícku linku Ayvens / LeasePlan:",
+                serv_call_sk: "Volať na Slovensku",
+                serv_call_abroad: "Volať zo Zahraničia",
+                serv_glass_h: "Oprava čelného skla",
+                serv_glass_p: "Vždy riešiť cez <strong>Autosklo HORNET</strong> na vyššie uvedených kontaktoch.",
+                serv_partners_h: "Servisní partneri",
+                serv_partners_p: "<strong>Volkswagen:</strong> sieť TODOS<br><strong>BMW:</strong> sieť BMW",
+                serv_warning_h: "Dôležité upozornenie",
+                serv_warning_p: "Servisný interval nesmie byť za žiadnych okolností prekročený! Objednávajte sa s dostatočným predstihom. Nedodržanie intervalu môže viesť k strate záruky a zosobneniu nákladov.",
+                rules_h2: "Základné pravidlá používania vozidla",
+                rules_1: "<strong class=\"block\">Zákaz fajčenia:</strong> Vo všetkých služobných vozidlách platí prísny zákaz fajčenia!",
+                rules_2: "<strong class=\"block\">Doklady a karty:</strong> Nikdy nenechávajte doklady od vozidla a tankovacie karty vo vozidle.",
+                rules_3: "<strong class=\"block\">Zamykanie:</strong> Pri každom opustení vozidla je užívateľ povinný ho riadne uzamknúť a vziať si kľúč.",
+                rules_4: "<strong class=\"block\">Čistota:</strong> Služobné vozidlo je užívateľ povinný udržiavať v čistote. Čistenie interiéru na náklady spol. Lidl je zakázané.",
+                rules_5: "<strong class=\"block\">Poistenie:</strong> Vozidlo je poistené proti krádeži a poškodeniu. Poistenie sa nevzťahuje na súkromné veci vo vozidle.",
+                fuel_h2: "Pravidlá pre Tankovanie",
+                fuel_p1: "Dodržiavajte tieto pravidlá pri používaní tankovacích kariet.",
+                fuel_allowed_h: "Povolené služby a pravidlá",
+                fuel_allowed_1: "Zadávanie stavu tachometra je pri platbe kartou povinné.",
+                fuel_allowed_2: "Umytie vozidla je povolené (iba najlacnejší program, max. 1x týždenne).",
+                fuel_allowed_3: "Pri tankovaní do požičaného vozidla zadajte stav km ako \"1\".",
+                fuel_forbidden_h: "Zakázané úkony",
+                fuel_forbidden_1: "Kupovať diaľničné známky alebo platiť mýtne poplatky pri súkromných cestách.",
+                fuel_forbidden_2: "Tankovať špeciálne/prémiové pohonné hmoty (napr. V-Power, M-Motion a pod.).",
+                fuel_forbidden_3: "PIN kód nesmie byť vyznačený na karte ani uchovávaný spolu s ňou.",
+                fuel_lost_card_h: "Strata alebo odcudzenie karty",
+                fuel_lost_card_p: "V prípade straty je nutné <strong>okamžite hlásiť</strong> udalosť oddeleniu Mobility na email <a href=\"mailto:mobilita@lidl.sk\" class=\"underline font-semibold\">mobilita@lidl.sk</a>. Počas doby do vystavenia nových kariet (2-3 týždne) tankuje zamestnanec za súkromné prostriedky a náklady si vyúčtuje cez Concur.",
+                maint_h2: "Údržba a Pneumatiky",
+                maint_p1: "Okrem pravidelných servisných prehliadok je vodič zodpovedný aj za bežnú údržbu vozidla.",
+                maint_tires_sk_h: "Prezúvanie pneumatík na Slovensku",
+                maint_winter_h: "Zimné pneumatiky: Povinnosť a odporúčania",
+                maint_winter_p1: "Zákon o cestnej premávke ukladá vodičom osobných vozidiel povinnosť použiť zimné pneumatiky vtedy, ak je na vozovke súvislá vrstva snehu, ľad alebo námraza. Toto pravidlo platí bez ohľadu na dátum v kalendári.",
+                maint_winter_p2: "Všeobecným a osvedčeným odporúčaním je prezuť na zimné pneumatiky, keď priemerná denná teplota klesne pod 7 °C. Zmes letných pneumatík pri nízkych teplotách tvrdne, čím stráca priľnavosť a predlžuje sa brzdná dráha.",
+                maint_winter_l1: "Minimálna hĺbka dezénu pre zimné pneumatiky na osobných vozidlách je zákonom stanovená na <strong>3 mm</strong>. Odborníci však z bezpečnostných dôvodov odporúčajú výmenu už pri hĺbke <strong>4 mm</strong>.",
+                maint_winter_l2: "Zimné pneumatiky sú označené symbolom \"M+S\", \"M.S\", \"M&S\" alebo symbolom alpského štítu (3PMSF - Three-Peak Mountain Snowflake).",
+                maint_summer_h: "Letné pneumatiky: Kedy je správny čas na prezutie?",
+                maint_summer_p1: "Zákon nestanovuje povinnosť prezuť na letné pneumatiky. Jazda na zimných pneumatikách v letných mesiacoch však nie je bezpečná ani ekonomická. Zimné pneumatiky sa pri vyšších teplotách rýchlejšie opotrebúvajú, zvyšujú spotrebu paliva a majú horšie brzdné vlastnosti na suchej a mokrej vozovke.",
+                maint_summer_p2: "Ideálnym časom na prezutie na letné pneumatiky je, keď sa priemerné denné teploty stabilne držia nad 7 °C.",
+                maint_summer_l1: "Minimálna povolená hĺbka dezénu pre letné pneumatiky je <strong>1,6 mm</strong>. Z bezpečnostného hľadiska sa však odporúča pneumatiky vymeniť, ak hĺbka dezénu klesne pod <strong>3 mm</strong>.",
+                maint_tires_h: "Objednávka na prezutie pneumatík",
+                maint_tires_p: "Objednáva sa cez zákaznícku linku Ayvens / LeasePlan:",
+                maint_call_customer_line: "Volať Zákaznícku Linku",
+                maint_fluids_h: "Olej a voda do ostrekovačov",
+                maint_fluids_p: "Sú k dispozícii na recepcii centrály alebo u technikov skladu proti podpisu. V servise sa tieto kvapaliny nedopĺňajú na náklady firmy.",
+                maint_check_h: "Kontrola stavu vozidla",
+                maint_check_p: "Pravidelne sledujte funkčnosť vozidla a stav prevádzkových kvapalín, o potrebe doplnenia sa dozviete z infopanelu vozidla i v aplikácii MY BMW.",
+                maint_bolt_h: "Stratený poistný šrób od kolesa",
+                maint_bolt_p: "Nástavec sa zvyčajne nachádza v kufri. Ak ho servis nevie nájsť, je potrebné vymeniť celú sadu poistných šróbov.",
+                newcar_h2: "Proces Nového Vozidla",
+                newcar_p1: "Pridelenie a objednanie nového služobného vozidla sa riadi internými pravidlami spoločnosti.",
+                newcar_assign_h: "Pridelenie Vozidla",
+                newcar_assign_p: "Služobné vozidlo sa prideľuje zamestnancovi na základe jeho pracovnej pozície a interných smerníc.",
+                newcar_assign_l1: "<strong>Podmienky:</strong> Nárok na vozidlo a jeho kategória sú určené pracovnou pozíciou. Používanie na súkromné účely vyžaduje podpísanú dohodu.",
+                newcar_assign_l2: "<strong>Protokol:</strong> Pridelenie aj odovzdanie vozidla sa vždy zaznamenáva do preberacieho protokolu.",
+                newcar_order_h: "Objednanie Nového Vozidla",
+                newcar_order_p: "Proces objednania je plne v kompetencii oddelenia Mobility a riadi sa schváleným modelom obmeny.",
+                newcar_order_l1: "<strong>Plán obmeny:</strong> Objednávka sa riadi vekom aktuálneho vozidla a platným mesačným modelom obmeny.",
+                newcar_order_l2: "<strong>Nenárokovateľnosť:</strong> Nárok na objednanie nového vozidla nie je zo strany zamestnanca automaticky nárokovateľný.",
+                logbook_h2: "Elektronická Kniha Jázd (EKJ)",
+                logbook_p1: "Správne a včasné vedenie knihy jázd je kľúčovou povinnosťou každého vodiča.",
+                logbook_rules_h: "Základné Pravidlá a Povinnosti",
+                logbook_rules_l1: "<strong>Povinné vedenie:</strong> Každý užívateľ je povinný viesť EKJ.",
+                logbook_rules_l2: "<strong>Aktivácia:</strong> Aktivácia vozidla a kariet v systéme prebehne do 3 týždňov od prebratia vozidla.",
+                logbook_rules_l3: "<strong>Súkromné vs. Služobné jazdy:</strong> Dôsledne rozlišujte medzi súkromnými a služobnými jazdami. Cesta medzi bydliskom a prácou je vždy súkromná.",
+                logbook_rules_l4: "<strong>Voľné dni:</strong> Počas dovolenky a dní pracovného voľna musia byť všetky kilometre vykázané ako súkromné.",
+                logbook_deadlines_h: "Dôležité Termíny",
+                logbook_deadlines_l1: "<strong>Spracovanie jázd:</strong> Vždy spätne za uplynulý mesiac, najneskôr do konca nasledujúceho mesiaca.",
+                logbook_deadlines_l2: "<strong>Nahrávanie tankovaní (SK):</strong> Prebieha automaticky 2. pracovný deň nasledujúceho mesiaca.",
+                logbook_deadlines_l3: "<strong>Nahrávanie tankovaní (Zahraničie):</strong> Synchronizujte až po 20. dni nasledujúceho mesiaca.",
+                logbook_problems_h: "Riešenie Problémov",
+                logbook_problems_p: "Akékoľvek problémy s EKJ (nefunkčnosť, chybné párovanie tankovaní, atď.) nahláste bezodkladne prostredníctvom <strong class=\"font-semibold\">IT ticketu</strong> s čo najpresnejším popisom problému.",
+                fines_h2: "Pokuty a Priestupky",
+                fines_p1: "Zodpovednosť za dopravné priestupky a s nimi spojené pokuty nesie vždy vodič vozidla.",
+                fines_process_h: "Proces riešenia pokuty",
+                fines_step1_h: "Doručenie pokuty",
+                fines_step1_p: "Všetky pokuty (domáce aj zahraničné), ktoré neboli uhradené na mieste, sú doručené spoločnosti Lidl.",
+                fines_step2_h: "Identifikácia a výzva",
+                fines_step2_p: "Oddelenie Mobility identifikuje vodiča a zašle mu emailom výzvu na úhradu pokuty v plnej výške.",
+                fines_step3_h: "Povinnosť uhradiť a odoslať doklad",
+                fines_step3_p: "Zamestnanec je povinný pokutu uhradiť a následne zaslať doklad o úhrade na email: <a href=\"mailto:pokuty@lidl.sk\" class=\"text-blue-600 underline font-medium\">pokuty@lidl.sk</a>.",
+                fines_warning_h: "Dôležité upozornenie",
+                fines_warning_p: "Ak zamestnanec neuhradí pokutu a nezašle doklad, celá suma (vrátane prípadných penále) bude postúpená právnemu oddeleniu a následne stiahnutá zo mzdy zamestnanca.",
+                ins_h2_title: "Aktuálne máme vozidlá poistené cez Kooperatívu",
+                ins_p1: "Všetky naše vozidlá majú i havarijné poistenie KASKO.",
+                ins_report_h: "Hlásenie poistnej udalosti",
+                ins_report_p: "Všetky poistné udalosti je nutné <strong>bezodkladne hlásiť</strong> maklérovi MARSH a v kópii oddeleniu Mobility.",
+                ins_broker_contact: "Kontakt na makléra MARSH:",
+                ins_show_procedure: "Zobraziť postup",
+                ins_abroad_h: "Poistná udalosť v zahraničí",
+                ins_abroad_l1: "Postupuje sa individuálne cez makléra <strong>MARSH</strong>.",
+                ins_abroad_l2: "Zoznam povolených krajín, kam môžete vycestovať, je uvedený na <strong>zelenej karte</strong> vo vozidle.",
+                contacts_h2: "Dôležité kontakty",
+                contacts_assist_h: "Asistencia a Servis",
+                contacts_assist_1h: "NONSTOP Hotlinka (Ayvens) - SK",
+                contacts_call: "Volať",
+                contacts_assist_2h: "NONSTOP Hotlinka (Ayvens) - Zahraničie",
+                contacts_call_2: "Volať",
+                contacts_assist_3h: "Odťah Kooperativa (mimo prac. doby) - SK",
+                contacts_call_3: "Volať",
+                contacts_assist_4h: "Odťah Kooperativa - Zahraničie",
+                contacts_call_4: "Volať",
+                contacts_admin_h: "Hlásenie udalostí a administratíva",
+                contacts_admin_1h: "Poistné udalosti (MARSH)",
+                contacts_call_5: "Volať",
+                contacts_admin_2h: "Email pre PU (MARSH)",
+                contacts_admin_3h: "Email pre Mobilitu (vždy v kópii)",
+                contacts_admin_4h: "Strata kľúča (urgentne mimo prac. doby)",
+                contacts_admin_4p: "Tomáš Nedelka: <a href=\"tel:0911115093\" class=\"underline text-lg\">0911 115 093</a>",
+                bmw_h2: "Aplikácia My BMW",
+                bmw_p1: "Aplikácia My BMW je vaše digitálne prepojenie s vozidlom. Ponúka inteligentné funkcie pre plánovanie jázd, kontrolu stavu vozidla a vzdialené ovládanie, všetko pohodlne z vášho smartfónu.",
+                bmw_important_h: "Dôležité:",
+                bmw_important_p: "Aplikácia je kompatibilná so všetkými vozidlami BMW. Pre plnú funkčnosť je potrebné spárovať aplikáciu s vaším vozidlom. V prípade problémov s párovaním alebo funkčnosťou aplikácie kontaktujte servisného poradcu BMW.",
+                bmw_apple_1: "Stiahnuť na",
+                bmw_apple_2: "App Store",
+                bmw_google_1: "ZÍSKAŤ NA",
+                bmw_google_2: "Google Play",
+                bmw_video_h: "Video Návod",
+            },
+            en: {
+                main_title: "Driver's Guide",
+                main_subtitle: "Your interactive guide for Lidl company vehicles",
+                quick_actions_title: "Quick Actions & Emergencies",
+                accident_title: "I've had an accident",
+                accident_subtitle: "Immediate step-by-step procedure.",
+                breakdown_title: "My car broke down",
+                breakdown_subtitle: "Contact for assistance service.",
+                service_title: "I need service",
+                service_subtitle: "Booking and contacts.",
+                categories_title: "Information Categories",
+                nav_rules: "Basic Rules",
+                nav_fueling: "Refueling",
+                nav_fueling_abroad: "Refueling Abroad",
+                nav_maintenance: "Maintenance & Tires",
+                nav_insurance: "Insurance Claims",
+                nav_logbook: "Logbook",
+                nav_fines: "Fines",
+                nav_new_car: "New Vehicle",
+                nav_my_bmw: "MY BMW",
+                nav_contacts: "Important Contacts",
+                phone: "Phone:",
+                go_to_my_bmw: "Go to MY BMW section",
+                acc_h1: "TRAFFIC ACCIDENT",
+                acc_p1: "Stay calm. Here is your guide.",
+                acc_h2_1: "STEP 1: Immediate Safety",
+                acc_p2: "Your priority is to prevent further damage and ensure the health of all participants.",
+                acc_h3_1: "STOP AND TURN ON LIGHTS",
+                acc_p3: "Stop immediately and turn on the hazard lights.",
+                acc_h3_2: "VEST AND TRIANGLE",
+                acc_p4: "Put on a reflective vest and place the warning triangle.",
+                acc_h3_3: "CHECK FOR INJURIES",
+                acc_p5: "If anyone is injured, call immediately.",
+                acc_call_1: "Call Ambulance",
+                acc_call_2: "Call Emergency 112",
+                acc_h2_2: "STEP 2: Call the police?",
+                acc_p6: "The law specifies exactly when police presence is mandatory.",
+                acc_q1: "Is anyone injured or killed?",
+                acc_yes: "YES",
+                acc_no: "NO",
+                acc_call_police: "CALL 158",
+                acc_q2: "Is the damage higher than €4000?",
+                acc_yes_2: "YES",
+                acc_no_2: "NO",
+                acc_call_police_2: "CALL 158",
+                acc_q3: "Can you agree on who is at fault?",
+                acc_no_3: "NO",
+                acc_call_police_3: "CALL 158",
+                acc_yes_3: "YES",
+                acc_no_police: "You do not have to call the police.",
+                acc_h2_3: "STEP 3: Proper Documentation",
+                acc_p7: "If you do not call the police, it is up to you to document everything correctly for the insurance company.",
+                acc_doc_1_h: "Fill out the Accident Report",
+                acc_doc_1_p: "The most important document. It must be signed by both parties.",
+                acc_doc_2_h: "Photograph the scene",
+                acc_doc_2_p: "Take pictures of everything: car positions, damages, brake marks.",
+                acc_doc_3_h: "Details of the other party",
+                acc_doc_3_p: "Name, address, license plate, and especially the liability insurance policy number.",
+                acc_doc_4_h: "Get witnesses",
+                acc_doc_4_p: "If someone saw the accident, ask for their contact information.",
+                acc_h2_4: "STEP 4: Reporting to the Insurance Company",
+                acc_p8: "The final, but critical step, is to report the insurance claim to the broker and insurance company. Do not forget the legal deadlines.",
+                acc_broker_h: "Always contact the MARSH broker",
+                acc_broker_p: "All insurance claims must be reported <strong>without delay</strong> to the broker, with a copy to the Mobility department.",
+                acc_broker_call: "Call MARSH broker",
+                acc_deadline_h: "Reporting Deadlines",
+                acc_deadline_1: "Accident in Slovakia",
+                acc_deadline_2: "Accident abroad",
+                acc_deadline_p: "Do not delay. After these deadlines, the insurance company may reduce or completely deny the insurance payment.",
+                fuel_abroad_h2: "Using Fuel Cards Abroad",
+                fuel_abroad_rules_h: "Refueling Rules",
+                fuel_abroad_rules_p: "The rules are the same as for refueling in Slovakia. Details are described in the <strong>Refueling</strong> category.",
+                fuel_abroad_partners_h: "Partner Gas Station Network for Our Fuel Cards",
+                fuel_abroad_omv_h: "OMV (Routex Card)",
+                fuel_abroad_omv_p: "You can find the acceptance network where you can use your Routex card on the official website. Use the \"Site Finder\" function on the left side to search for stations.",
+                fuel_abroad_omv_a: "Visit www.routex.com",
+                fuel_abroad_shell_h: "SHELL",
+                fuel_abroad_shell_p: "Since an offline list cannot be kept constantly updated, please use our gas station finder (publicly available on our website). The default filter includes partner stations.",
+                fuel_abroad_shell_a: "Open Shell Finder",
+                break_h2: "Vehicle Breakdown",
+                break_p1: "If your vehicle is immobile due to a technical failure, proceed as follows:",
+                break_contact_h: "Contact the NONSTOP Ayvens / LeasePlan Hotline:",
+                break_call_sk: "Call in Slovakia",
+                break_call_abroad: "Call from Abroad",
+                break_p2: "The operator will arrange for vehicle towing and, if necessary, a replacement vehicle.",
+                break_specific_cases: "Specific Cases (flat tire, lost keys)",
+                break_flat_tire: "Flat Tire",
+                break_flat_1: "<strong>On weekends:</strong> Repair at the nearest tire service (pay privately, reimbursement via Concur).",
+                break_flat_2: "<strong>Abroad:</strong> Handle individually by contacting the Kooperativa assistance service.",
+                break_flat_3: "<strong>Immobile vehicle:</strong> Call the Kooperativa assistance service for towing.",
+                break_flat_4: "<strong>Damaged rim:</strong> Handle as an insurance claim through the MARSH broker.",
+                break_locked_keys: "Keys Locked Inside",
+                break_locked_1: "Try to open via the MyBMW app.",
+                break_locked_2: "Alternatively, order a locksmith service through Kooperativa.",
+                break_locked_3: "<strong>Urgently (outside working hours):</strong> Call Tomáš Nedelka at <a href=\"tel:0911115093\" class=\"underline font-semibold\">0911 115 093</a>.",
+                break_lost_keys: "Lost Keys",
+                break_lost_1: "Immediately remove the license plates from the vehicle.",
+                break_lost_2: "Try to open via the app and remove personal belongings.",
+                break_lost_3: "Communicate with the Mobility department.",
+                break_lost_4: "Arrange for transport to a BMW service center to block the old key and order a new one.",
+                serv_h2: "Vehicle Service and Repair",
+                serv_p1: "Regular service and repairs are provided by Ayvens / LeasePlan through a network of contracted partners.",
+                serv_order_h: "Booking a Service Appointment",
+                serv_order_p: "To book a service, repair, or tire change, call the Ayvens / LeasePlan customer line:",
+                serv_call_sk: "Call in Slovakia",
+                serv_call_abroad: "Call from Abroad",
+                serv_glass_h: "Windshield Repair",
+                serv_glass_p: "Always handle through <strong>Autosklo HORNET</strong> using the contacts above.",
+                serv_partners_h: "Service Partners",
+                serv_partners_p: "<strong>Volkswagen:</strong> TODOS network<br><strong>BMW:</strong> BMW network",
+                serv_warning_h: "Important Notice",
+                serv_warning_p: "The service interval must not be exceeded under any circumstances! Book your appointment well in advance. Failure to adhere to the interval may lead to warranty voidance and personal liability for costs.",
+                rules_h2: "Basic Rules for Vehicle Use",
+                rules_1: "<strong class=\"block\">No Smoking:</strong> A strict no-smoking policy applies in all company vehicles!",
+                rules_2: "<strong class=\"block\">Documents and Cards:</strong> Never leave vehicle documents and fuel cards in the vehicle.",
+                rules_3: "<strong class=\"block\">Locking:</strong> The user is required to properly lock the vehicle and take the key every time they leave it.",
+                rules_4: "<strong class=\"block\">Cleanliness:</strong> The user is required to keep the company vehicle clean. Interior cleaning at Lidl's expense is prohibited.",
+                rules_5: "<strong class=\"block\">Insurance:</strong> The vehicle is insured against theft and damage. The insurance does not cover personal belongings in the vehicle.",
+                fuel_h2: "Refueling Rules",
+                fuel_p1: "Follow these rules when using fuel cards.",
+                fuel_allowed_h: "Allowed Services and Rules",
+                fuel_allowed_1: "Entering the odometer reading is mandatory when paying by card.",
+                fuel_allowed_2: "Car washing is permitted (cheapest program only, max. once a week).",
+                fuel_allowed_3: "When refueling a rental vehicle, enter the km status as \"1\".",
+                fuel_forbidden_h: "Prohibited Actions",
+                fuel_forbidden_1: "Buying highway vignettes or paying tolls for private trips.",
+                fuel_forbidden_2: "Refueling with special/premium fuels (e.g., V-Power, M-Motion, etc.).",
+                fuel_forbidden_3: "The PIN code must not be written on the card or kept with it.",
+                fuel_lost_card_h: "Lost or Stolen Card",
+                fuel_lost_card_p: "In case of loss, the incident must be reported <strong>immediately</strong> to the Mobility department via email at <a href=\"mailto:mobilita@lidl.sk\" class=\"underline font-semibold\">mobilita@lidl.sk</a>. Until new cards are issued (2-3 weeks), the employee refuels using private funds and claims the costs via Concur.",
+                maint_h2: "Maintenance and Tires",
+                maint_p1: "In addition to regular service inspections, the driver is also responsible for routine vehicle maintenance.",
+                maint_tires_sk_h: "Tire Change in Slovakia",
+                maint_winter_h: "Winter Tires: Obligation and Recommendations",
+                maint_winter_p1: "The Road Traffic Act requires drivers of passenger cars to use winter tires when there is a continuous layer of snow, ice, or frost on the road. This rule applies regardless of the calendar date.",
+                maint_winter_p2: "The general and proven recommendation is to switch to winter tires when the average daily temperature drops below 7 °C. The compound of summer tires hardens at low temperatures, reducing grip and increasing braking distance.",
+                maint_winter_l1: "The minimum legal tread depth for winter tires on passenger cars is <strong>3 mm</strong>. However, for safety reasons, experts recommend replacement at a depth of <strong>4 mm</strong>.",
+                maint_winter_l2: "Winter tires are marked with the symbol \"M+S\", \"M.S\", \"M&S\", or the Alpine symbol (3PMSF - Three-Peak Mountain Snowflake).",
+                maint_summer_h: "Summer Tires: When is the right time to change?",
+                maint_summer_p1: "The law does not mandate switching to summer tires. However, driving on winter tires in the summer months is neither safe nor economical. Winter tires wear out faster at higher temperatures, increase fuel consumption, and have poorer braking performance on dry and wet roads.",
+                maint_summer_p2: "The ideal time to switch to summer tires is when average daily temperatures are consistently above 7 °C.",
+                maint_summer_l1: "The minimum permitted tread depth for summer tires is <strong>1.6 mm</strong>. For safety reasons, however, it is recommended to replace the tires if the tread depth falls below <strong>3 mm</strong>.",
+                maint_tires_h: "Booking a Tire Change",
+                maint_tires_p: "Bookings are made through the Ayvens / LeasePlan customer line:",
+                maint_call_customer_line: "Call Customer Line",
+                maint_fluids_h: "Oil and Washer Fluid",
+                maint_fluids_p: "These are available at the headquarters reception or from warehouse technicians upon signature. These fluids are not refilled at the company's expense during service.",
+                maint_check_h: "Vehicle Status Check",
+                maint_check_p: "Regularly monitor the vehicle's functionality and fluid levels. You will be notified of the need for a top-up via the vehicle's info panel and in the MY BMW app.",
+                maint_bolt_h: "Lost Wheel Lock Bolt",
+                maint_bolt_p: "The adapter is usually located in the trunk. If the service center cannot find it, the entire set of lock bolts must be replaced.",
+                newcar_h2: "New Vehicle Process",
+                newcar_p1: "The assignment and ordering of a new company vehicle are governed by the company's internal rules.",
+                newcar_assign_h: "Vehicle Assignment",
+                newcar_assign_p: "A company vehicle is assigned to an employee based on their job position and internal guidelines.",
+                newcar_assign_l1: "<strong>Conditions:</strong> The entitlement to a vehicle and its category are determined by the job position. Use for private purposes requires a signed agreement.",
+                newcar_assign_l2: "<strong>Protocol:</strong> Both the assignment and the return of the vehicle are always recorded in a handover protocol.",
+                newcar_order_h: "Ordering a New Vehicle",
+                newcar_order_p: "The ordering process is fully managed by the Mobility department and follows the approved replacement model.",
+                newcar_order_l1: "<strong>Replacement Plan:</strong> The order is based on the age of the current vehicle and the valid monthly replacement model.",
+                newcar_order_l2: "<strong>Non-entitlement:</strong> The employee does not have an automatic right to order a new vehicle.",
+                logbook_h2: "Electronic Logbook (EKJ)",
+                logbook_p1: "Correct and timely maintenance of the logbook is a key responsibility of every driver.",
+                logbook_rules_h: "Basic Rules and Obligations",
+                logbook_rules_l1: "<strong>Mandatory keeping:</strong> Every user is required to maintain an electronic logbook.",
+                logbook_rules_l2: "<strong>Activation:</strong> The vehicle and cards will be activated in the system within 3 weeks of vehicle handover.",
+                logbook_rules_l3: "<strong>Private vs. Business trips:</strong> Strictly distinguish between private and business trips. The journey between home and work is always private.",
+                logbook_rules_l4: "<strong>Days off:</strong> During holidays and days off, all kilometers must be recorded as private.",
+                logbook_deadlines_h: "Important Deadlines",
+                logbook_deadlines_l1: "<strong>Trip processing:</strong> Always retroactively for the past month, no later than the end of the following month.",
+                logbook_deadlines_l2: "<strong>Refueling upload (SK):</strong> Occurs automatically on the 2nd working day of the following month.",
+                logbook_deadlines_l3: "<strong>Refueling upload (Abroad):</strong> Synchronize only after the 20th day of the following month.",
+                logbook_problems_h: "Troubleshooting",
+                logbook_problems_p: "Report any problems with the electronic logbook (malfunction, incorrect refueling pairing, etc.) immediately via an <strong class=\"font-semibold\">IT ticket</strong> with the most accurate description of the problem.",
+                fines_h2: "Fines and Offenses",
+                fines_p1: "The driver of the vehicle is always responsible for traffic offenses and associated fines.",
+                fines_process_h: "Fine Resolution Process",
+                fines_step1_h: "Fine Delivery",
+                fines_step1_p: "All fines (domestic and foreign) that were not paid on the spot are delivered to Lidl.",
+                fines_step2_h: "Identification and Notice",
+                fines_step2_p: "The Mobility department identifies the driver and sends them an email notice to pay the fine in full.",
+                fines_step3_h: "Obligation to Pay and Send Proof",
+                fines_step3_p: "The employee is obliged to pay the fine and then send proof of payment to the email: <a href=\"mailto:pokuty@lidl.sk\" class=\"text-blue-600 underline font-medium\">pokuty@lidl.sk</a>.",
+                fines_warning_h: "Important Warning",
+                fines_warning_p: "If the employee fails to pay the fine and send proof, the full amount (including any penalties) will be forwarded to the legal department and subsequently deducted from the employee's salary.",
+                ins_h2_title: "Our vehicles are currently insured with Kooperativa",
+                ins_p1: "All our vehicles also have comprehensive (KASKO) insurance.",
+                ins_report_h: "Reporting an Insurance Claim",
+                ins_report_p: "All insurance claims must be reported <strong>without delay</strong> to the MARSH broker, with a copy to the Mobility department.",
+                ins_broker_contact: "Contact for MARSH broker:",
+                ins_show_procedure: "Show Procedure",
+                ins_abroad_h: "Insurance Claim Abroad",
+                ins_abroad_l1: "Handled individually through the <strong>MARSH</strong> broker.",
+                ins_abroad_l2: "The list of permitted countries you can travel to is listed on the <strong>green card</strong> in the vehicle.",
+                contacts_h2: "Important Contacts",
+                contacts_assist_h: "Assistance and Service",
+                contacts_assist_1h: "NONSTOP Hotline (Ayvens) - SK",
+                contacts_call: "Call",
+                contacts_assist_2h: "NONSTOP Hotline (Ayvens) - Abroad",
+                contacts_call_2: "Call",
+                contacts_assist_3h: "Towing Kooperativa (outside working hours) - SK",
+                contacts_call_3: "Call",
+                contacts_assist_4h: "Towing Kooperativa - Abroad",
+                contacts_call_4: "Call",
+                contacts_admin_h: "Claim Reporting and Administration",
+                contacts_admin_1h: "Insurance Claims (MARSH)",
+                contacts_call_5: "Call",
+                contacts_admin_2h: "Email for Insurance Claims (MARSH)",
+                contacts_admin_3h: "Email for Mobility (always in CC)",
+                contacts_admin_4h: "Lost Key (urgent, outside working hours)",
+                contacts_admin_4p: "Tomáš Nedelka: <a href=\"tel:0911115093\" class=\"underline text-lg\">0911 115 093</a>",
+                bmw_h2: "My BMW App",
+                bmw_p1: "The My BMW app is your digital connection to your vehicle. It offers smart features for planning trips, checking vehicle status, and remote control, all conveniently from your smartphone.",
+                bmw_important_h: "Important:",
+                bmw_important_p: "The app is compatible with all BMW vehicles. To use its full functionality, you need to pair the app with your vehicle. If you have problems with pairing or app functionality, contact a BMW service advisor.",
+                bmw_apple_1: "Download on the",
+                bmw_apple_2: "App Store",
+                bmw_google_1: "GET IT ON",
+                bmw_google_2: "Google Play",
+                bmw_video_h: "Video Tutorial",
+            }
+        };
+
+        const skFlag = document.getElementById('lang-sk');
+        const enFlag = document.getElementById('lang-en');
+
+        const setLanguage = (lang) => {
+            document.documentElement.lang = lang;
+            localStorage.setItem('language', lang);
+
+            document.querySelectorAll('[data-translate-key]').forEach(element => {
+                const key = element.getAttribute('data-translate-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+
+            if (lang === 'sk') {
+                skFlag.classList.add('active');
+                enFlag.classList.remove('active');
+                document.title = "Interaktívna Príručka pre Vodičov | Lidl";
+            } else {
+                enFlag.classList.add('active');
+                skFlag.classList.remove('active');
+                document.title = "Interactive Driver's Guide | Lidl";
+            }
+        };
+
+        skFlag.addEventListener('click', () => setLanguage('sk'));
+        enFlag.addEventListener('click', () => setLanguage('en'));
+
+        // Načítanie jazyka pri štarte
+        const savedLang = localStorage.getItem('language') || 'sk';
+        setLanguage(savedLang);
+
+        // --- MODÁLNE OKNO ---
+        const modalBackdrop = document.getElementById('modal-backdrop');
+        const modalContent = document.getElementById('modal-content');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+
+        const openModal = (contentId, titleText, scrollToId = null) => {
+            const contentTemplate = document.getElementById(contentId);
+            if (!contentTemplate) return;
+            
+            const currentLang = localStorage.getItem('language') || 'sk';
+            const titleKey = Array.from(document.querySelector(`[data-content-id="${contentId}"]`).querySelector('h3').attributes).find(attr => attr.name === 'data-translate-key').value;
+            modalTitle.textContent = translations[currentLang][titleKey] || titleText;
+
+            modalBody.innerHTML = ''; // Vyčistiť predchádzajúci obsah
+            const newContent = contentTemplate.cloneNode(true);
+            modalBody.appendChild(newContent);
+            
+            // Re-apply translations for the modal content
+            modalBody.querySelectorAll('[data-translate-key]').forEach(element => {
+                const key = element.getAttribute('data-translate-key');
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    element.innerHTML = translations[currentLang][key];
+                }
+            });
+
+
+            // Pridať listener pre tlačidlo na presmerovanie z Poistenia na Nehodu
+            const goToStep3Button = modalBody.querySelector('#go-to-step3-btn');
+            if (goToStep3Button) {
+                goToStep3Button.addEventListener('click', () => {
+                    closeModal();
+                    // Timeout, aby sa stihla zavrieť animácia
+                    setTimeout(() => {
+                        openModal('content-nehoda', 'Mám nehodu', 'krok4');
+                    }, 300); 
+                });
+            }
+
+            // Pridať listener pre tlačidlo na presmerovanie z Údržby na MY BMW
+            const goToMyBmwButton = modalBody.querySelector('#go-to-my-bmw-btn');
+            if (goToMyBmwButton) {
+                goToMyBmwButton.addEventListener('click', () => {
+                    closeModal();
+                    setTimeout(() => {
+                        openModal('content-my-bmw', 'MY BMW');
+                    }, 300);
+                });
+            }
+
+            modalBackdrop.classList.remove('hidden');
+            modalContent.classList.remove('hidden');
+            
+            // Posunúť na element, ak je zadaný
+            if (scrollToId) {
+                // Timeout, aby sa element stihol vykresliť
+                setTimeout(() => {
+                    const elementToScroll = modalBody.querySelector(`#${scrollToId}`);
+                    if (elementToScroll) {
+                        modalBody.scrollTo({
+                            top: elementToScroll.offsetTop - 20, // 20px odstup
+                            behavior: 'smooth'
+                        });
+                    }
+                }, 100);
+            }
+
+            // Pridať event listeners pre akordeóny v novom obsahu
+            setupAccordions(modalBody);
+        };
+
+        const closeModal = () => {
+            modalBackdrop.classList.add('hidden');
+            modalContent.classList.add('hidden');
+            modalBody.innerHTML = ''; // Vyčistiť obsah po zatvorení
+        };
+
+        document.querySelectorAll('.quick-action-btn, .nav-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const contentId = card.dataset.contentId;
+                const titleElement = card.querySelector('h3');
+                const titleText = titleElement ? titleElement.textContent : 'Informácie';
+                openModal(contentId, titleText);
+            });
+        });
+
+        closeModalBtn.addEventListener('click', closeModal);
+        modalBackdrop.addEventListener('click', closeModal);
+
+        // --- AKORDEÓN ---
+        const setupAccordions = (container) => {
+            container.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector('span:last-child');
+                    
+                    content.classList.toggle('hidden');
+                    if (content.classList.contains('hidden')) {
+                        icon.textContent = '+';
+                    } else {
+                        icon.textContent = '-';
+                    }
+                });
+            });
+        }
+    });
+    </script>
+</body>
+</html>
